@@ -1,0 +1,9 @@
+{
+  "amtApi": {
+    "prefixUrl": "/"
+  },
+  "cognito": {
+    "userPoolID": "eu-west-1_sobeHbscQ",
+    "appClientID": "6ch0fdctb9nrlj0m3aggtvoalq"
+  }
+}

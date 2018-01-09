@@ -1,0 +1,57 @@
+{
+  "name": "amt-webfront",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demonstrating how to deploy a Single Page Application with Serverless",
+  "repository": {
+    "type": "git",
+    "url": "https://git-codecommit.eu-west-1.amazonaws.com/v1/repos/amt-webfront"
+  },
+  "author": "Adoptematomate.com",
+  "license": "MIT",
+  "dependencies": {
+    "amazon-cognito-identity-js": "^1.28.0",
+    "classes": "^0.3.0",
+    "classnames": "^2.2.5",
+    "config": "^1.28.1",
+    "html-webpack-plugin": "^2.30.1",
+    "leaflet": "^1.2.0",
+    "material-ui": "^1.0.0-beta.24",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "path": "^0.12.7",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-leaflet": "^1.7.8",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.14",
+    "react-scroll-to-component": "^1.0.1",
+    "react-social-icons": "^2.7.0",
+    "react-tap-event-plugin": "^3.0.2",
+    "validator": "^9.2.0"
+  },
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build-dev": "webpack -d",
+    "build-prod": "webpack -p",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.6",
+    "image-webpack-loader": "^3.4.2",
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  }
+}
