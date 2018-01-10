@@ -13,7 +13,6 @@ import Grid from 'material-ui/Grid';
 
 
 //Cards
-import TeamCard from "../components/cards/TeamCard.jsx";
 import ValueCard from "../components/cards/ValueCard.jsx";
 //import for scrolling
 import scrollToComponent from 'react-scroll-to-component';

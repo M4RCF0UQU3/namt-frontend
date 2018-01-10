@@ -182,25 +182,24 @@ class Introduction extends React.Component{
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image="/images/setzlinge.jpeg"
+            image="/images/bille.jpg"
             title="Présentation"
           />
           <CardContent>
             <Typography type="headline" component="h2">
-              Adopte ma Tomate...
+              Abandonne ta Tomate...
             </Typography>
             <Typography component="p">
-              Ensembles, re-végétalisons la ville ! Reprenons le contrôle de notre alimentation, favorisons la production locale, le lien social et intergénérationnel. Et surtout collaborons à la préservation des savoirs faire des gestes du jardinage.
-              Nous vous proposons le futur du co-jardinage urbain !
+              Vu qu'on a été viré, nous faisons de la concurrence !
+            </Typography>
+            <Typography component="p">
+              Cet élément n'est pas une card c'est dans introduction.jsx
             </Typography>
           </CardContent>
           <CardActions disableActionSpacing>
-              <IconButton style={styles.icons}><SocialIcon url="https://www.facebook.com/adoptematomate" style={{ height: 25, width: 25 }}/></IconButton>
-              <IconButton style={styles.icons}><SocialIcon url="mailto:adoptematomate@gmail.com" network="email" style={{ height: 25, width: 25 }}/></IconButton>
-              <IconButton style={styles.icons}><SocialIcon url="https://twitter.com/ioctavia" style={{ height: 25, width: 25 }}/></IconButton>
 
               <div className={classes.flexGrow} />
-              <Button onClick={this.handleClickOpenDialog}>Rester informé</Button>
+              <Button onClick={this.handleClickOpenDialog}>C'est le newletter</Button>
             </CardActions>
         </Card>
         {newsletterDialog}

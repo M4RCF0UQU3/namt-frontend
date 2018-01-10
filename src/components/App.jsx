@@ -8,7 +8,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Home from "../scenes/Home";
 import Project from "../scenes/Project";
-import Blog from "../scenes/Blog";
 import Events from "../scenes/Events";
 import SignScreen from "../scenes/SignScreen";
 
@@ -31,7 +30,6 @@ class App extends Component {
           <Header/>
           <div style={styles.main}>
             <Route exact path='/' component={Home}/>
-            <Route exact path='/blog' component={Blog}/>
             <Route exact path='/events' component={Events}/>
             <Route exact path='/prensentation' component={Events}/>
             <Route exact path='/project' component={Project}/>

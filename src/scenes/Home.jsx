@@ -14,12 +14,9 @@ import Grid from 'material-ui/Grid';
 
 //Cards
 import ShowCard from "../components/cards/ShowCard.jsx";
-import TeamCard from "../components/cards/TeamCard.jsx";
-import BlogCard from "../components/cards/BlogCard.jsx";
 import GardenerCard from "../components/cards/GardenerCard.jsx";
 import LanderCard from "../components/cards/LanderCard.jsx";
 import EventsCard from "../components/cards/EventsCard.jsx";
-import PartnerCard from "../components/cards/PartnerCard.jsx";
 import ValueCard from "../components/cards/ValueCard.jsx";
 
 //import for scrolling
@@ -76,17 +73,11 @@ class Home extends React.Component {
 				<Grid item xs={12} sm={6}>
 					<LanderCard/>
 				</Grid>
-				<Grid item xs={12} sm={6} md={4}>
+				<Grid item xs={12} sm={6}>
 					<Link to="/project" style={styles.lien}><ShowCard/></Link>
 				</Grid>
-				<Grid item xs={12} sm={6} md={4}>
+				<Grid item xs={12} sm={6}>
 					<EventsCard/>
-				</Grid>
-				<Grid item xs={12} sm={6} md={4}>
-					<BlogCard/>
-				</Grid>
-				<Grid item xs={12}>
-					<PartnerCard/>
 				</Grid>
 			</Grid>
 		);
