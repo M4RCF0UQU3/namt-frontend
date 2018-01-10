@@ -22,10 +22,10 @@ function ShowCard(props) {
         />
         <CardContent>
           <Typography type="headline" component="h3">
-            Présentation du projet
+            Marc :
           </Typography>
           <Typography component="p">
-            Nos quoi et pourquoi...
+            Présentation de l'application
           </Typography>
         </CardContent>
       </MainPageCard>

@@ -41,7 +41,6 @@ class MenuAppli extends React.Component {
     const menu = (
       <div>
         <Link to="/events" style={styles.lien}><List>Événements</List></Link>
-        <Link to="/blog" style={styles.lien}><List>Blog</List></Link>
       </div>
     );
     return (

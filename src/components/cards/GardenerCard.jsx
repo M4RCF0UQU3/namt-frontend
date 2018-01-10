@@ -23,22 +23,22 @@ function CustomCard(props) {
       <MainPageCard className={classes.card}>
         <CardMedia
           className={classes.media}
-          image="/images/medium-logo.jpg"
+          image="/images/chat.png"
           title="Blog"
         />
       <CardContent>
           <Typography type="headline" component="h3">
-            Jardiner
+            Chat
           </Typography>
           <Typography component="p">
-            Remplissez le formulaire et laissez-nous faire le reste.
+            Chercher un jardin.
           </Typography>
         </CardContent>
         <CardActions>
           <div className={classes.flexGrow} />
           <Button label="Remplir le formulaire"
               href="https://docs.google.com/forms/d/e/1FAIpQLScARUhLXGZmND_pBvti02oi_sZvJce35jnfejglIAY4FHxxSQ/viewform"
-                target="_blank">Je cherche jardin</Button>
+                target="_blank">Je cherche jardin (être inscrit)</Button>
         </CardActions>
       </MainPageCard>
   );
