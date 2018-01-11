@@ -23,12 +23,12 @@ function CustomCard(props) {
       <MainPageCard className={classes.card}>
         <CardMedia
           className={classes.media}
-          image="/images/chat.png"
+          image="/images/aqueuse.jpg"
           title="Blog"
         />
       <CardContent>
           <Typography type="headline" component="h3">
-            Chat
+            Boule d'eau
           </Typography>
           <Typography component="p">
             Chercher un jardin.

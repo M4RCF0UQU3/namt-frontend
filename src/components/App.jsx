@@ -11,6 +11,7 @@ import Home from "../scenes/Home";
 import Project from "../scenes/Project";
 import Events from "../scenes/Events";
 import SignScreen from "../scenes/SignScreen";
+import ProfilUserPublic from "../scenes/ProfilUserPublic";
 
 const styles = {
   container: {
@@ -35,6 +36,7 @@ class App extends Component {
             <Route exact path='/prensentation' component={Events}/>
             <Route exact path='/project' component={Project}/>
             <Route  path='/signin' component={SignScreen}/>
+            <Route exact path='/profil' component={ProfilUserPublic}/>
           </div>
           <Footer/>
         </div>

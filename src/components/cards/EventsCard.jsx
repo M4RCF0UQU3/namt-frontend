@@ -22,7 +22,7 @@ function CustomCard(props) {
         />
         <CardContent>
           <Typography type="headline" component="h3">
-            Voie ferrée !
+            Faire voyager !
           </Typography>
           <Typography component="p">
             Evénement.
