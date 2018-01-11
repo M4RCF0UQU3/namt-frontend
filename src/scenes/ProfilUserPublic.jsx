@@ -106,10 +106,13 @@ class ProfilUserPublic extends React.Component{
               <Avatar alt="Chat" src="/images/chat.png" className={classes.bigAvatar} />
               {/*<GridListLander/>*/}
               <Typography component="p">
+                Liste de jardins possédés
+              </Typography>
+              <Typography component="p">
                 Liste de jardins où il travaille
               </Typography>
               <Typography component="p">
-              Évaluations 
+                Évaluations 
               </Typography>
             </Grid>
           </Grid>
