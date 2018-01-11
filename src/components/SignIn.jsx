@@ -11,9 +11,9 @@ import Divider from 'material-ui/Divider';
 import Toolbar from 'material-ui/Toolbar';
 import Grid from 'material-ui/Grid';
 import { green, red } from 'material-ui/colors';
-import { withRouter } from 'react-router'
+import {withRouter} from 'react-router';
+import { CircularProgress } from 'material-ui/Progress';
 
-import {browserHistory} from 'react-router-dom';
 
 const primary = green[500];
 const accent = red['A200'];
@@ -63,36 +63,45 @@ const styles = theme => ({
 class SignIn extends React.Component{
   constructor(props) {
       super(props);
-      this.state = { email: '', password: '' };
+      this.state = { email: '', password: '', checking: false };
 	  this.handleSubmit = this.handleSubmit.bind(this);
 	  this.forward = this.forward.bind(this);
+	  this.setCharging = this.setCharging.bind(this);
   };
   forward() {
-	  alert(this.prop.pute);
+	  this.props.history.push('/events');
   }
 	
-
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
 
   };
+  setCharging(){
+	if(!this.state.checking)
+		this.setState({ checking: true });
+	else
+		this.setState({ checking: false });	
+  };
+  
   handleSubmit() {
-	//I NEED A FUCKING COPY OF THIS 
-	var samere = this.props.pute;
-	//alert(samere);
-	  var tamere = this.forward();
+		this.setCharging();
 	  	fetch('http://localhost/namt-backend/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
 				method: 'get'}, {mode: 'cors'}
 				)
 				.then(function(resp){return resp.text()})
 				.then(function(data) {
-				if(data=="Connection refused")
+				if(data=="Connection refused"){
 					alert("Vous identifiants ne sont pas corrects");
-				else{
-					alert(samere);
+					this.setCharging();
+				}
+				else if (data=="OK"){
+					this.forward();
+				} else {
+					alert("Echec de connexion a nos services. Veuillez essayer ulterieurement");
+					this.setCharging();
 				}
 				
-			})
+			}.bind(this))
 			.catch(function(error) {
 				alert(error);
 			}); 
@@ -101,7 +110,6 @@ class SignIn extends React.Component{
 
   render(){
       const { classes } = this.props;
-
       return(
           <Paper className={classes.container} elevation={4}>
             <div className={classes.header}>
@@ -109,8 +117,8 @@ class SignIn extends React.Component{
                   Login
               </Typography>
             </div>
-
             <form className={classes.form} noValidate autoComplete="off">
+				{this.state.checking?(<CircularProgress className={classes.progress} />):""}
               <div>
                 <TextField
                   required
@@ -171,4 +179,4 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignIn);
+export default withRouter(withStyles(styles)(SignIn));
