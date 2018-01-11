@@ -1,16 +1,16 @@
 {
-  "name": "amt-webfront",
+  "name": "namt-frontend",
   "version": "0.1.0",
   "private": true,
   "description": "Demonstrating how to deploy a Single Page Application with Serverless",
   "repository": {
     "type": "git",
-    "url": "https://git-codecommit.eu-west-1.amazonaws.com/v1/repos/amt-webfront"
+    "url": "https://github.com/eemanon/namt-frontend.git"
   },
-  "author": "Adoptematomate.com",
+  "author": "",
   "license": "MIT",
   "dependencies": {
-    "amazon-cognito-identity-js": "^1.28.0",
+    
     "classes": "^0.3.0",
     "classnames": "^2.2.5",
     "config": "^1.28.1",

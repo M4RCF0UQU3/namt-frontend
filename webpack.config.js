@@ -69,7 +69,7 @@ var webpackConfig = {
     extensions: ['.js', '.jsx'],
   },
   devServer: {
-    port: 3000, // most common port
+    port: 8081, // most common port
     contentBase: './public',
     inline: true,
     historyApiFallback: true
