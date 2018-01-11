@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
   BrowserRouter as Router,
+  browserHistory,
   Route,
   Link
 } from 'react-router-dom'
@@ -25,7 +26,7 @@ const styles = {
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={browserHistory}>
         <div style={styles.container}>
           <Header/>
           <div style={styles.main}>
@@ -33,7 +34,7 @@ class App extends Component {
             <Route exact path='/events' component={Events}/>
             <Route exact path='/prensentation' component={Events}/>
             <Route exact path='/project' component={Project}/>
-            <Route path='/signin' component={SignScreen}/>
+            <Route  path='/signin' component={SignScreen}/>
           </div>
           <Footer/>
         </div>

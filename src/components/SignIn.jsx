@@ -10,14 +10,10 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import Toolbar from 'material-ui/Toolbar';
 import Grid from 'material-ui/Grid';
-
 import { green, red } from 'material-ui/colors';
+import { withRouter } from 'react-router'
 
-import {
-  CognitoUserPool,
-  AuthenticationDetails,
-  CognitoUser
-} from "amazon-cognito-identity-js";
+import {browserHistory} from 'react-router-dom';
 
 const primary = green[500];
 const accent = red['A200'];
@@ -64,47 +60,44 @@ const styles = theme => ({
   }
 
 });
-
-
 class SignIn extends React.Component{
   constructor(props) {
       super(props);
       this.state = { email: '', password: '' };
+	  this.handleSubmit = this.handleSubmit.bind(this);
+	  this.forward = this.forward.bind(this);
   };
-
+  forward() {
+	  alert(this.prop.pute);
+  }
+	
 
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
 
   };
-
-  handleSubmit = async event => {
-    event.preventDefault();
-
-    try {
-      await this.login(this.state.email, this.state.password);
-      alert("Logged in");
-    } catch (e) {
-      alert(e);
-    }
+  handleSubmit() {
+	//I NEED A FUCKING COPY OF THIS 
+	var samere = this.props.pute;
+	//alert(samere);
+	  var tamere = this.forward();
+	  	fetch('http://localhost/namt-backend/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
+				method: 'get'}, {mode: 'cors'}
+				)
+				.then(function(resp){return resp.text()})
+				.then(function(data) {
+				if(data=="Connection refused")
+					alert("Vous identifiants ne sont pas corrects");
+				else{
+					alert(samere);
+				}
+				
+			})
+			.catch(function(error) {
+				alert(error);
+			}); 
   };
 
-  login(email, password) {
-    const userPool = new CognitoUserPool({
-      UserPoolId: __CONFIG__.cognito.userPoolID,
-      ClientId: __CONFIG__.cognito.appClientID
-    });
-    const user = new CognitoUser({ Username: email, Pool: userPool });
-    const authenticationData = { Username: email, Password: password };
-    const authenticationDetails = new AuthenticationDetails(authenticationData);
-
-    return new Promise((resolve, reject) =>
-      user.authenticateUser(authenticationDetails, {
-        onSuccess: result => resolve(),
-        onFailure: err => reject(err)
-      })
-    );
-  };
 
   render(){
       const { classes } = this.props;
@@ -117,7 +110,7 @@ class SignIn extends React.Component{
               </Typography>
             </div>
 
-            <form className={classes.form} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+            <form className={classes.form} noValidate autoComplete="off">
               <div>
                 <TextField
                   required
@@ -145,7 +138,7 @@ class SignIn extends React.Component{
                 />
               </div>
               <div>
-                <Button raised color="primary" className={classes.button} type="submit">
+                <Button raised color="primary" className={classes.button} onClick={this.handleSubmit } >
                   Connexion
                 </Button>
               </div>
@@ -171,9 +164,11 @@ class SignIn extends React.Component{
       );
   }
 }
-
+SignIn.defaultProps = {
+   pute: "tonpere",
+}
 SignIn.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(SignIn);
