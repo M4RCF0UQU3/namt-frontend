@@ -23,6 +23,7 @@ const styles = {
   lien: {
   	marginLeft: 'auto',
   	marginRight: 'auto',
+    textDecoration: 'none',
   },
 };
 
@@ -56,17 +57,18 @@ class Header extends React.Component {
                     <ListItemIcon>
                       <EventIcon />
                     </ListItemIcon>
-                    <ListItemText inset primary="Evénements" />
+                    <ListItemText inset primary="Événements" />
                   </ListItem>
                 </Link>
 
-                <ListItem button component="a" href="https://medium.com/acc%C3%A9l%C3%A9rateur-momentum/adopte-ma-tomate-b595ac29d5ef"
-                  target="_blank">
-                  <ListItemIcon>
-                    <LibraryBooksIcon />
-                  </ListItemIcon>
-                  <ListItemText inset primary="Blog" />
-                </ListItem>
+                <Link to="/profil" style={styles.lien}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <LibraryBooksIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Profil" />
+                  </ListItem>
+                </Link>
 
               </List>
             </div>
