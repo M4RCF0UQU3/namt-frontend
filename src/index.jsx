@@ -11,6 +11,6 @@ import App from './components/App'; // Our custom react component
 injectTapEventPlugin();
 // Render the main app react component into the app div.
 // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-render((
+render((	
 		<App/>
 ), document.getElementById('root'));

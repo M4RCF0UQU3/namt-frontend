@@ -81,7 +81,7 @@ class SignIn extends React.Component{
 	var samere = this.props.pute;
 	//alert(samere);
 	  var tamere = this.forward();
-	  	fetch('http://localhost/namt-backend/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
+	  	fetch('http://lestomatesperdus.fr/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
 				method: 'get'}, {mode: 'cors'}
 				)
 				.then(function(resp){return resp.text()})

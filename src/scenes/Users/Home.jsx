@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import Section from "../components/tools/Section.jsx";
-import MapGarden from "../components/MapGarden.jsx";
 import Input from 'material-ui/Input';
 import Send from 'material-ui-icons/Send';
 import Divider from 'material-ui/Divider';
@@ -13,20 +11,7 @@ import Grid from 'material-ui/Grid';
 
 
 //Cards
-import ShowCard from "../components/cards/ShowCard.jsx";
-import GardenerCard from "../components/cards/GardenerCard.jsx";
-import LanderCard from "../components/cards/LanderCard.jsx";
-import EventsCard from "../components/cards/EventsCard.jsx";
-import ValueCard from "../components/cards/ValueCard.jsx";
-
-//import for scrolling
-import scrollToComponent from 'react-scroll-to-component';
-//Email Subscription
-import validator from 'validator' ;
-//Newsletter
-//import Newsletter from '../components/Newsletter.jsx';
-import Introduction from '../components/Introduction.jsx';
-import { fade } from 'material-ui/utils/colorManipulator';
+import Chip from '../../components/chips/Chips.jsx';
 
 const styles = {
 	container: {
@@ -60,7 +45,11 @@ class Home extends React.Component {
 		const { classes } = this.props;
 		
 		return (
-			fade
+			<Grid container spacing={20} alignItems="stretch">
+				<Grid item xs={12} sm={6}>
+					<Chip/>
+				</Grid>
+			</Grid>
 		);
    	}
 }
