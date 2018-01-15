@@ -13,6 +13,7 @@ import Events from "../scenes/Events";
 import SignScreen from "../scenes/SignScreen";
 import ProfilUserPublic from "../scenes/ProfilUserPublic";
 import SearchGarden from "../scenes/Users/SearchGarden";
+import ProfilUserPrivate from "../scenes/Users/Home"
 
 const styles = {
   container: {
@@ -39,6 +40,7 @@ class App extends Component {
             <Route  path='/signin' component={SignScreen}/>
             <Route exact path='/profil' component={ProfilUserPublic}/>
             <Route  path='/search_garden' component={SearchGarden}/>
+            <Route exact path='/accueilUser' component={ProfilUserPrivate}/>
           </div>
           <Footer/>
         </div>
