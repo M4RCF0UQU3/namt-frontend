@@ -69,7 +69,7 @@ class SignIn extends React.Component{
 	  this.setCharging = this.setCharging.bind(this);
   };
   forward() {
-	  this.props.history.push('/home');
+      this.props.history.push('/acceuilUser');      
   }
 	
   handleChange = prop => event => {
@@ -85,7 +85,7 @@ class SignIn extends React.Component{
   
   handleSubmit() {
 		this.setCharging();
-	  	fetch('http://localhost/namt-backend/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
+	  	fetch('http://lestomatesperdus.fr/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
 				method: 'get'}, {mode: 'cors'}
 				)
 				.then(function(resp){return resp.text()})
