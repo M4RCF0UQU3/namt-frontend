@@ -71,21 +71,20 @@ class Header extends React.Component {
                   </ListItem>
                 </Link>
 
-<<<<<<< HEAD
                 <Link to="/search_garden" style={styles.lien}>
                   <ListItem button>
                     <ListItemIcon>
                       <Search />
                     </ListItemIcon>
                     <ListItemText inset primary="Chercher Jardin" />
-=======
+                </Link>
+                
                 <Link to="/accueilUser" style={styles.lien}>
                   <ListItem button>
                     <ListItemIcon>
                       <EventIcon />
                     </ListItemIcon>
                     <ListItemText inset primary="Accueil" />
->>>>>>> b9cc88c5a85b4eed03b4e916d6eaf114921ca970
                   </ListItem>
                 </Link>
 
