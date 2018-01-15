@@ -77,8 +77,9 @@ class Header extends React.Component {
                       <Search />
                     </ListItemIcon>
                     <ListItemText inset primary="Chercher Jardin" />
+                  </ListItem>
                 </Link>
-                
+
                 <Link to="/accueilUser" style={styles.lien}>
                   <ListItem button>
                     <ListItemIcon>
