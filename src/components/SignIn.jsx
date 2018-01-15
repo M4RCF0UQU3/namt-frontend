@@ -89,7 +89,7 @@ class SignIn extends React.Component{
 				if(data=="Connection refused")
 					alert("Vous identifiants ne sont pas corrects");
 				else{
-					alert(samere);
+          
 				}
 				
 			})
