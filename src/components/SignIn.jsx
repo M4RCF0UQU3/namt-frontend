@@ -69,7 +69,7 @@ class SignIn extends React.Component{
 	  this.setCharging = this.setCharging.bind(this);
   };
   forward() {
-	  this.props.history.push('/events');
+	  this.props.history.push('/home');
   }
 	
   handleChange = prop => event => {
@@ -171,9 +171,6 @@ class SignIn extends React.Component{
 
       );
   }
-}
-SignIn.defaultProps = {
-   pute: "tonpere",
 }
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired
