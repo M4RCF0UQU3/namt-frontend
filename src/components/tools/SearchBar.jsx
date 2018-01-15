@@ -14,10 +14,11 @@ const styles = theme => ({
 	},
 	formControl: {
 		margin: theme.spacing.unit,
-		backgroundColor: '#909090',
+		backgroundColor: '#D0D0D0',
 		opacity: '0,5',
 		marginLeft: theme.spacing.unit,
 		marginRight: theme.spacing.unit,
+    width: '95%',
 	},
 	withoutLabel: {
 		marginTop: theme.spacing.unit * 3,
