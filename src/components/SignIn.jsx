@@ -68,7 +68,7 @@ class SignIn extends React.Component{
 	  this.forward = this.forward.bind(this);
   };
   forward() {
-	  alert(this.prop.pute);
+	  this.props.history.push('/home');
   }
 	
 
@@ -163,9 +163,6 @@ class SignIn extends React.Component{
 
       );
   }
-}
-SignIn.defaultProps = {
-   pute: "tonpere",
 }
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired
