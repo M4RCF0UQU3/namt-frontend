@@ -14,6 +14,9 @@ import Search from 'material-ui-icons/Search';
 import Button from 'material-ui/Button';
 import Badge from 'material-ui/Badge';
 import FaceIcon from 'material-ui-icons/Face';
+import Avatar from 'material-ui/Avatar';
+
+import { connect } from 'react-redux';
 
 const styles = {
   appbar: {
@@ -38,25 +41,51 @@ class Header extends React.Component {
 		numMessages: 0,			//system messages 
 		photoLink: '',			//profile image
 		accountType: 'user',	//profile type
+		count: 0
 	};
+	
+	  increment = () => {
+	this.props.dispatch({ type: 'INCREMENT' });
+  }
+
+  decrement = () => {
+	this.props.dispatch({ type: 'DECREMENT' });
+	this.props.dispatch({ type: 'CONNECT' });
+	console.log(this.props)
+  }
   constructor(props) {
       super(props);
   }
   componentDidMount(){
-	  //check login
-	  alert("");
+	  this.tryLogin();
+	
+  }
+  getProfilePhoto(email){
+	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
+		.then(function(resp){return resp.json()})
+		.then(function(data) {
+			if(data.info!="notconnected")
+				this.setState({photoLink: data.photo});
+		
+	}.bind(this))
+	.catch(function(error) {
+		alert(error);
+	}); 
   }
   
-  debuGgetData(){
-		fetch('http://localhost/namt-backend/getInfoConnected.php', {credentials: 'include', method: 'get', accept: 'application/json'})
-				.then(function(resp){return resp.json()})
-				.then(function(data) {
-					alert(data.info[0].nom);
-				
-			}.bind(this))
-			.catch(function(error) {
-				alert(error);
-			}); 
+  tryLogin(){
+	fetch('http://localhost/namt-backend/getInfoConnected.php', {credentials: 'include', method: 'get', accept: 'application/json'})
+		.then(function(resp){return resp.json()})
+		.then(function(data) {
+			if(data.info!="notconnected"){
+				this.setState({connected: true})
+				this.getProfilePhoto(data.info[0].email);
+			}
+		
+	}.bind(this))
+	.catch(function(error) {
+		console.log(error);
+	}); 
   }
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -128,15 +157,19 @@ class Header extends React.Component {
               onClick={this.toggleDrawer('left', true)}>
               <MenuIcon />
           </IconButton>
-		  <Button onClick={this.debuGgetData}>checkConnection</Button>
+		  
+		  <button onClick={this.decrement}>lebuttonquitue</button>
+			  {this.props.count}
+			  {this.props.connected}
+		  
           <Link to="/" style={styles.lien}><img src='/images/logo.png' style={styles.img}/></Link>
-			{this.state.connected?(this.state.photoLink==''?(<FaceIcon />):(<img src={this.state.photoLink} style={styles.img}/>)):( 
-		  <Button
-							component={Link}
-              color="contrast"
-              to="/signin"
-						  >
-							{'Connexion'}
+			{this.state.connected?(this.state.photoLink==''?(<FaceIcon />):(<Avatar src={this.state.photoLink} />)):( 
+			  <Button
+								component={Link}
+				  color="contrast"
+				  to="/signin"
+							  >
+								{'Connexion'}
 			</Button>)}
         </Toolbar>
         {drawer}
@@ -145,8 +178,15 @@ class Header extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    count: state.count,
+	connected: state.connected
+  };
+}
+
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(connect(mapStateToProps)(Header));

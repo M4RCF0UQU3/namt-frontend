@@ -10,7 +10,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    
     "classes": "^0.3.0",
     "classnames": "^2.2.5",
     "config": "^1.28.1",
@@ -23,12 +22,14 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-leaflet": "^1.7.8",
+    "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
     "react-scroll-to-component": "^1.0.1",
     "react-social-icons": "^2.7.0",
     "react-tap-event-plugin": "^3.0.2",
+    "redux": "^3.7.2",
     "validator": "^9.2.0"
   },
   "scripts": {
