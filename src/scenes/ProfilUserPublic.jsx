@@ -23,9 +23,9 @@ import {
   GridListTile, 
   GridListTileBar
 } from 'material-ui/GridList';
-import Subheader from 'material-ui/List/ListSubheader';
 import InfoIcon from 'material-ui-icons/Info';
-import GridListLander from '../components/GridListLander.jsx';
+import ListLanderOwner from '../components/ListLanderOwner.jsx';
+import ListLanderExploit from '../components/ListLanderExploit.jsx';
 
 const styles = {
   card: {
@@ -79,6 +79,10 @@ const styles = {
     margin: 'auto',
   },
 
+  imageProfil: {
+    height: '50px',
+    width: '50px',
+  },
 };
 
 class ProfilUserPublic extends React.Component{
@@ -100,20 +104,28 @@ class ProfilUserPublic extends React.Component{
         <Card className={classes.card}>
           <Grid container spacing={20} alignItems="stretch">
             <Grid item xs={12} sm={12}>
-              <Typography type="headline" component="h2">
-                Profil de Michel
-              </Typography>
+
               <Avatar alt="Chat" src="/images/chat.png" className={classes.bigAvatar} />
-              {/*<GridListLander/>*/}
-              <Typography component="p">
-                Liste de jardins possédés
+
+              <Typography type="headline" component="h2">
+                Michel
               </Typography>
-              <Typography component="p">
-                Liste de jardins où il travaille
+
+              <Typography type="headline" component="h3">
+                Propriétaire des jardins suivants :
               </Typography>
-              <Typography component="p">
+              <ListLanderOwner/>
+
+              <Typography type="headline" component="h3">
+                Exploite les jardins suivants :
+              </Typography>
+              <ListLanderExploit/>
+
+              <Typography type="headline" component="h3">
                 Évaluations 
               </Typography>
+
+              
             </Grid>
           </Grid>
         </Card>

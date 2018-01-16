@@ -14,7 +14,7 @@ import { green, red } from 'material-ui/colors';
 import {withRouter} from 'react-router';
 import { CircularProgress } from 'material-ui/Progress';
 
-
+//pour mamadou
 const primary = green[500];
 const accent = red['A200'];
 
@@ -69,7 +69,7 @@ class SignIn extends React.Component{
 	  this.setCharging = this.setCharging.bind(this);
   };
   forward() {
-	  this.props.history.push('/home');
+      this.props.history.push('/acceuilUser');      
   }
 	
   handleChange = prop => event => {

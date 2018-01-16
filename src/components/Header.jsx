@@ -10,6 +10,7 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Drawer from 'material-ui/Drawer';
 import EventIcon from 'material-ui-icons/Event';
 import LibraryBooksIcon from 'material-ui-icons/LibraryBooks';
+import Search from 'material-ui-icons/Search';
 import Button from 'material-ui/Button';
 import Badge from 'material-ui/Badge';
 import FaceIcon from 'material-ui-icons/Face';
@@ -87,6 +88,24 @@ class Header extends React.Component {
                       <LibraryBooksIcon />
                     </ListItemIcon>
                     <ListItemText inset primary="Profil" />
+                  </ListItem>
+                </Link>
+
+                <Link to="/search_garden" style={styles.lien}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <Search />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Chercher Jardin" />
+                  </ListItem>
+                </Link>
+
+                <Link to="/accueilUser" style={styles.lien}>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <EventIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Accueil" />
                   </ListItem>
                 </Link>
 
