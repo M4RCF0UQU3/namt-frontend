@@ -85,10 +85,13 @@ class SignIn extends React.Component{
   
   handleSubmit() {
 		this.setCharging();
-	  	fetch('http://localhost/namt-backend/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
-				method: 'get'}, {credentials: "include"}
-				)
-				.then(function(resp){return resp.text()})
+		fetch('http://localhost/namt-backend/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json'
+          },
+          credentials: 'include'
+        }).then(function(resp){return resp.text()})
 				.then(function(data) {
 				if(data=="Connection refused"){
 					alert("Vous identifiants ne sont pas corrects");

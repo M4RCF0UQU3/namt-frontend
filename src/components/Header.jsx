@@ -41,19 +41,28 @@ class Header extends React.Component {
 	};
   constructor(props) {
       super(props);
-	  fetch('http://localhost/namt-backend/getInfoConnected.php', {
-				method: 'get'}, {credentials: "include"}
-				)
-				.then(function(resp){return resp.text()})
+  }
+  getData(){
+	  var myHeaders = new Headers();
+	  myHeaders.append('Content-Type', 'text/html');
+		var myInit = { method: 'GET',
+					   headers: myHeaders,
+					   mode: 'no-cors',
+					   cache: 'default',
+					   credentials: 'include'};
+
+		var myRequest = new Request('http://localhost/namt-backend/getInfoConnected.php',myInit);
+		fetch('http://localhost/namt-backend/getInfoConnected.php', {credentials: 'include', method: 'get', accept: 'application/json'})
+				.then(function(resp){return resp.json()})
 				.then(function(data) {
-				alert(data);
+					console.log("NOOOON");
+					alert(data.info[0].nom);
 				
 			}.bind(this))
 			.catch(function(error) {
 				alert(error);
 			}); 
   }
-
   toggleDrawer = (side, open) => () => {
     this.setState({
       [side]: open,
@@ -124,6 +133,7 @@ class Header extends React.Component {
               onClick={this.toggleDrawer('left', true)}>
               <MenuIcon />
           </IconButton>
+		  <Button onClick={this.getData}>checkConnection</Button>
           <Link to="/" style={styles.lien}><img src='/images/logo.png' style={styles.img}/></Link>
 			{this.state.connected?(this.state.photoLink==''?(<FaceIcon />):(<img src={this.state.photoLink} style={styles.img}/>)):( 
 		  <Button
