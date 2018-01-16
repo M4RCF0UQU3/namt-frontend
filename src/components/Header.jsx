@@ -11,6 +11,8 @@ import Drawer from 'material-ui/Drawer';
 import EventIcon from 'material-ui-icons/Event';
 import LibraryBooksIcon from 'material-ui-icons/LibraryBooks';
 import Button from 'material-ui/Button';
+import Badge from 'material-ui/Badge';
+import FaceIcon from 'material-ui-icons/Face';
 
 const styles = {
   appbar: {
@@ -28,9 +30,27 @@ const styles = {
 };
 
 class Header extends React.Component {
+	state = {
+		left: false,			//drawer visible
+		connected: false,		//user connected
+		numRequestGarden: 0,	//users requests on gardens from other users
+		numMessages: 0,			//system messages 
+		photoLink: '',			//profile image
+		accountType: 'user',	//profile type
+	};
   constructor(props) {
       super(props);
-      this.state = { left: false };
+	  fetch('http://localhost/namt-backend/getInfoConnected.php', {
+				method: 'get'}, {credentials: "include"}
+				)
+				.then(function(resp){return resp.text()})
+				.then(function(data) {
+				alert(data);
+				
+			}.bind(this))
+			.catch(function(error) {
+				alert(error);
+			}); 
   }
 
   toggleDrawer = (side, open) => () => {
@@ -86,13 +106,14 @@ class Header extends React.Component {
               <MenuIcon />
           </IconButton>
           <Link to="/" style={styles.lien}><img src='/images/logo.png' style={styles.img}/></Link>
-          <Button
+			{this.state.connected?(this.state.photoLink==''?(<FaceIcon />):(<img src={this.state.photoLink} style={styles.img}/>)):( 
+		  <Button
 							component={Link}
               color="contrast"
               to="/signin"
 						  >
 							{'Connexion'}
-					</Button>
+			</Button>)}
         </Toolbar>
         {drawer}
       </AppBar>
