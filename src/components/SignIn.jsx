@@ -14,6 +14,8 @@ import { green, red } from 'material-ui/colors';
 import {withRouter} from 'react-router';
 import { CircularProgress } from 'material-ui/Progress';
 
+import { connect } from 'react-redux';
+
 //pour mamadou
 const primary = green[500];
 const accent = red['A200'];
@@ -61,6 +63,8 @@ const styles = theme => ({
 
 });
 class SignIn extends React.Component{
+	state = {connected: false}
+
   constructor(props) {
       super(props);
       this.state = { email: '', password: '', checking: false };
@@ -98,6 +102,7 @@ class SignIn extends React.Component{
 					this.setCharging();
 				}
 				else if (data=="OK"){
+					this.props.dispatch({ type: 'CONNECT' });
 					this.forward();
 				} else {
 					alert("Echec de connexion a nos services. Veuillez essayer ulterieurement");
@@ -175,8 +180,15 @@ class SignIn extends React.Component{
       );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+	connected: state.connected
+  };
+}
+
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withRouter(withStyles(styles)(SignIn));
+export default withRouter(withStyles(styles)(connect(mapStateToProps)(SignIn)));

@@ -52,14 +52,23 @@ class Header extends React.Component {
 	this.props.dispatch({ type: 'DECREMENT' });
 	this.props.dispatch({ type: 'CONNECT' });
 	console.log(this.props)
+	console.log(this.state)
   }
   constructor(props) {
       super(props);
   }
-  componentDidMount(){
-	  this.tryLogin();
-	
+  samere(){
+	  alert("OMG")
   }
+  componentDidMount(){
+	  //this.props.store.subscribe(this.samere)
+	  this.tryLogin();
+	  console.log(this);
+  }
+  componentDidUpdate(){
+	this.tryLogin();
+  }
+  
   getProfilePhoto(email){
 	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
@@ -156,11 +165,7 @@ class Header extends React.Component {
               aria-label="open drawer"
               onClick={this.toggleDrawer('left', true)}>
               <MenuIcon />
-          </IconButton>
-		  
-		  <button onClick={this.decrement}>lebuttonquitue</button>
-			  {this.props.count}
-			  {this.props.connected}
+          </IconButton>	
 		  
           <Link to="/" style={styles.lien}><img src='/images/logo.png' style={styles.img}/></Link>
 			{this.state.connected?(this.state.photoLink==''?(<FaceIcon />):(<Avatar src={this.state.photoLink} />)):( 
@@ -184,7 +189,6 @@ function mapStateToProps(state) {
 	connected: state.connected
   };
 }
-
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };

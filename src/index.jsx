@@ -31,11 +31,11 @@ function reducer(state = initialState, action) {
       });
 	case 'CONNECT':
       return Object.assign({}, state, {
-        connected: false
+        connected: true
       });
 	case 'DISCONNECT':
       return Object.assign({}, state, {
-        connected: true
+        connected: false
       });
     default:
       return state;
