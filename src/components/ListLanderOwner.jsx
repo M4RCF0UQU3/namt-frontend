@@ -36,55 +36,87 @@ import jardin from '../../public/images/jardin.jpg';
  
   const tileData = [
     {
-      img: jardin,
-      title: 'Jardin',
-      author: 'Franck',
+      photo: jardin,
+      nom: 'Jardin',
+      proprio: 'Franck',
     },
     {
-      img: jardin,
-      title: 'Jardin',
-      author: 'Alfred',
+      photo: jardin,
+      nom: 'Jardin',
+      proprio: 'Alfred',
     },
     {
-      img: jardin,
-      title: 'Jardin',
-      author: 'Annick',
+      photo: jardin,
+      nom: 'Jardin',
+      proprio: 'Annick',
     },
     {
-      img: jardin,
-      title: 'Jardin',
-      author: 'Gertrude',
+      photo: jardin,
+      nom: 'Jardin',
+      proprio: 'Gertrude',
     },
   ];
 
-function ListLanderOwner(props) {
-  const { classes } = props;
+class ListLanderOwner extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = { description_visible: [], items: [] };
+  }
+  /**
+  * Data initialisation from Garden service
+  */
+  componentDidMount() {
 
-  return (
-    <div className={classes.root}>
-      {/*Adapter le nombre de colonnes avec la taille de l'écran*/}
-      <GridList className={classes.gridList} cols={2}>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
-            <GridListTileBar
-              title={tile.title}
-              subtitle={<span>Propriétaire : {tile.author}</span>}
-              classes={{
-                root: classes.titleBar,
-                title: classes.title,
-              }}
-              actionIcon={
-                <IconButton className={classes.icon}>
-                  <StarBorderIcon className={classes.starColor} />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
-  );
+    var request = new Request("http://localhost/namt-backend/filtreJardin.php", {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+
+    fetch(request)
+      .then( result => result.json()) // still returns a promise object, U need to chain it again
+      .then( items => this.setState({items}))
+
+    // .then( response => {
+    //    this.setState({items:response.body});
+    //
+    // }).catch( err => {
+    //   console.log("Data initialisation KO");
+    //    console.log(err);
+    // });
+  }
+
+  render(){
+
+    const { classes } = this.props;
+    const gardens = this.state.items;
+
+    return (
+      <div className={classes.root}>
+        <GridList className={classes.gridList} cols={2}>
+          {gardens.map(garden => (
+            <GridListTile key={garden.photo}>
+              <img src={garden.photo} alt={garden.nom} />
+              <GridListTileBar
+                title={garden.nom}
+                subtitle={<span>Propriétaire : {garden.proprio}</span>}
+                classes={{
+                  root: classes.titleBar,
+                  title: classes.title,
+                }}
+                actionIcon={
+                  <IconButton className={classes.icon}>
+                    <StarBorderIcon className={classes.starColor} />
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
+    );
+  }
 }
 
 ListLanderOwner.propTypes = {
