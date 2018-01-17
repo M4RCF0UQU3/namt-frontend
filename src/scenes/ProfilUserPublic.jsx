@@ -26,12 +26,10 @@ import {
 import InfoIcon from 'material-ui-icons/Info';
 import ListLanderOwner from '../components/ListLanderOwner.jsx';
 import ListLanderExploit from '../components/ListLanderExploit.jsx';
+import Test from '../components/Test.jsx';
+
 
 const styles = {
-  card: {
-    margin: 'auto 10px',
-    marginBottom: '20px'
-  },
   media: {
     height: '30vh',
   },
@@ -102,30 +100,48 @@ class ProfilUserPublic extends React.Component{
     return(
       <div>
         <Card className={classes.card}>
-          <Grid container spacing={20} alignItems="stretch">
-            <Grid item xs={12} sm={12}>
-
-              <Avatar alt="Chat" src="/images/chat.png" className={classes.bigAvatar} />
-
-              <Typography type="headline" component="h2">
-                Michel
-              </Typography>
+          <Grid container spacing={16} alignItems="stretch">
+            <Grid item xs={12}>
+              <CardMedia
+                className={classes.media}
+                image="/images/chat.png"
+                title="Présentation"
+              />
+              <CardContent>
+                <Avatar alt="Chat" src="/images/chat.png" className={classes.bigAvatar} />
+                <Typography type="headline" component="h3">
+                  Michel
+                </Typography>
+                <Typography component="p">
+                  petite phrase d'accroche
+                </Typography>
+              </CardContent>
+            </Grid>
+              
+            <Grid item xs={12}>
 
               <Typography type="headline" component="h3">
                 Propriétaire des jardins suivants :
               </Typography>
               <ListLanderOwner/>
 
+            </Grid>
+
+            <Grid item xs={12}>
+
               <Typography type="headline" component="h3">
                 Exploite les jardins suivants :
               </Typography>
               <ListLanderExploit/>
 
+            </Grid>  
+
+            <Grid item xs={12}>
+
               <Typography type="headline" component="h3">
                 Évaluations 
               </Typography>
-
-              
+     
             </Grid>
           </Grid>
         </Card>
