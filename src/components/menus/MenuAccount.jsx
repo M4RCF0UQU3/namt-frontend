@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 import { Manager, Target, Popper } from 'react-popper';
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
+import {withRouter} from 'react-router';
 
 import DashboardIcon from 'material-ui-icons/Dashboard';
 import InboxIcon from 'material-ui-icons/MoveToInbox';
@@ -45,6 +46,10 @@ class MenuListComposition extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  goTo = (link) => {
+	this.props.history.push('/'+link);
+	this.handleClose();
+  }
 
   render() {
     const { classes } = this.props;
@@ -71,33 +76,33 @@ class MenuListComposition extends React.Component {
               <Grow in={open} id="menu-list" style={{ transformOrigin: '0 0 0' }}>
                 <Paper>
                   <MenuList role="menu">
-                    <MenuItem onClick={this.handleClose}>
+                    <MenuItem onClick={() => this.goTo("")}> 
 						<ListItemIcon className={classes.icon}>
 							<RoomIcon />
 						</ListItemIcon>
 						<ListItemText className={classes.listText} primary="Ajouter Jardin" />
 					</MenuItem>
-                    <MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+                    <MenuItem onClick={() => this.goTo("search_garden")}><ListItemIcon className={classes.icon}>
 						<SearchIcon />
 					  </ListItemIcon>
 					  <ListItemText className={classes.listText} primary="Recherche Jardin" />
 					</MenuItem>
-                    <MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+                    <MenuItem onClick={() => this.goTo("")}><ListItemIcon className={classes.icon}>
 						<DashboardIcon />
 					  </ListItemIcon>
 					  <ListItemText className={classes.listText} primary="Mes Jardins" />
 					</MenuItem>
-					<MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+					<MenuItem onClick={() => this.goTo("search_garden")}><ListItemIcon className={classes.icon}>
 						<EventIcon />
 					  </ListItemIcon>
 					  <ListItemText className={classes.listText} primary="Ajouter Evénement" />
 					</MenuItem>
-					<MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+					<MenuItem onClick={() => this.goTo("profil")}><ListItemIcon className={classes.icon}>
 						<AccountBoxIcon />
 					  </ListItemIcon>
 					  <ListItemText className={classes.listText} primary="Mon Profil" />
 					</MenuItem>
-					<MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+					<MenuItem onClick={() => this.goTo("messagerie")}><ListItemIcon className={classes.icon}>
 						<MailOutlineIcon />
 					  </ListItemIcon>
 					  <ListItemText className={classes.listText} primary="Demandes Jardin" />
@@ -122,4 +127,4 @@ MenuListComposition.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MenuListComposition);
+export default withRouter(withStyles(styles)(MenuListComposition));
