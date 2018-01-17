@@ -103,6 +103,7 @@ class SignIn extends React.Component{
 				}
 				else if (data=="OK"){
 					this.props.dispatch({ type: 'CONNECT' });
+					this.props.dispatch({ type: 'SETUSER', value: this.state.email});
 					this.forward();
 				} else {
 					alert("Echec de connexion a nos services. Veuillez essayer ulterieurement");
@@ -183,7 +184,8 @@ class SignIn extends React.Component{
 
 function mapStateToProps(state) {
   return {
-	connected: state.connected
+	connected: state.connected,
+	user: state.user
   };
 }
 

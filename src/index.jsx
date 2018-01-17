@@ -14,21 +14,13 @@ injectTapEventPlugin();
 // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
 
 const initialState = {
-  count: 0,
-  connected: false
+  connected: false,
+  user:''
 };
 
 
 function reducer(state = initialState, action) {
   switch(action.type) {
-    case 'INCREMENT':
-      return Object.assign({}, state, {
-        count: state.count+1
-      });
-    case 'DECREMENT':
-      return Object.assign({}, state, {
-        count: state.count-1
-      });
 	case 'CONNECT':
       return Object.assign({}, state, {
         connected: true
@@ -36,6 +28,10 @@ function reducer(state = initialState, action) {
 	case 'DISCONNECT':
       return Object.assign({}, state, {
         connected: false
+      });
+	case 'SETUSER':
+      return Object.assign({}, state, {
+        user: action.value
       });
     default:
       return state;

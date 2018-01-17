@@ -42,36 +42,23 @@ class Header extends React.Component {
 		numMessages: 0,			//system messages 
 		photoLink: '',			//profile image
 		accountType: 'user',	//profile type
-		count: 0
+		user: ''
 	};
 	
-	  increment = () => {
-	this.props.dispatch({ type: 'INCREMENT' });
-  }
-
-  decrement = () => {
-	this.props.dispatch({ type: 'DECREMENT' });
-	this.props.dispatch({ type: 'CONNECT' });
-	console.log(this.props)
-	console.log(this.state)
-  }
   constructor(props) {
       super(props);
-  }
-  samere(){
-	  alert("OMG")
   }
   componentDidMount(){
 	  if(!this.props.connected){
 	  this.checkLogin();		  
-	  //alert("DIDMOUNT TRIGGERED");
 	  }
 
   }
   componentDidUpdate(){	  
 	  if(this.props.connected!=this.state.connected){
-		console.log("component did update and props aint = state!"+this.props.connected);
-		this.checkLogin();		  
+		console.log("component did update, props.connected: "+this.props.connected+" this.state.connected: "+this.state.connected);
+		this.checkLogin();	
+		console.log(this.props);		
 	  }
 
   }
@@ -94,10 +81,12 @@ class Header extends React.Component {
 	fetch('http://localhost/namt-backend/getInfoConnected.php', {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
-			if(data.info!="notconnected"){
+			if(data.Reponse!="Veillez vous connecte"){
 				this.setState({connected: true})
 				this.props.dispatch({ type: 'CONNECT' });
 				this.getProfilePhoto(data.info[0].email);
+			} else {
+				console.log("NOT CONNECTED");
 			}
 	}.bind(this))
 	.catch(function(error) {
@@ -209,7 +198,7 @@ class Header extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    count: state.count,
+    user: state.user,
 	connected: state.connected
   };
 }
