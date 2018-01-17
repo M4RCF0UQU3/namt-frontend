@@ -26,7 +26,7 @@ import {
 import InfoIcon from 'material-ui-icons/Info';
 import ListLanderOwner from '../components/ListLanderOwner.jsx';
 import ListLanderExploit from '../components/ListLanderExploit.jsx';
-import Test from '../components/Test.jsx';
+{/*import Test from '../components/Test.jsx';*/}
 
 
 const styles = {
@@ -105,7 +105,7 @@ class ProfilUserPublic extends React.Component{
               <CardMedia
                 className={classes.media}
                 image="/images/chat.png"
-                title="Présentation"
+                title=""
               />
               <CardContent>
                 <Avatar alt="Chat" src="/images/chat.png" className={classes.bigAvatar} />

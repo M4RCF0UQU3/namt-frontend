@@ -14,7 +14,6 @@ import Grid from 'material-ui/Grid';
 import Card, { CardHeader, CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Tooltip from 'material-ui/Tooltip';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
-import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 import ShareIcon from 'material-ui-icons/Share';
 import Button from 'material-ui/Button';
@@ -75,10 +74,10 @@ class Test extends React.Component {
   }
 
   /**
-  * Data initialisation from Event service
+  * Data initialisation from Garden service
   */
   componentDidMount() {
-    {/*__CONFIG__.amtApi.prefixUrl + 'event-api/events'*/}
+
     var request = new Request("http://localhost/namt-backend/filtreJardin.php", {
       method: 'GET',
       headers: new Headers({
@@ -88,7 +87,7 @@ class Test extends React.Component {
 
     fetch(request)
       .then( result => result.json()) // still returns a promise object, U need to chain it again
-      .then( items => this.setState({items}));
+      .then( items => this.setState({items}))
 
     // .then( response => {
     //    this.setState({items:response.body});
@@ -105,13 +104,12 @@ class Test extends React.Component {
 
     return (
       <div className={classes.root}>
-        {/*Adapter le nombre de colonnes avec la taille de l'écran*/}
         <GridList className={classes.gridList} cols={2}>
           {gardens.map(garden => (
-            <GridListTile key={garden.img}>
-              <img src={garden.img} alt={garden.title} />
+            <GridListTile key={garden.photo}>
+              <img src={garden.photo} alt={garden.nom} />
               <GridListTileBar
-                title={garden.title}
+                title={garden.nom}
                 subtitle={<span>Propriétaire : {garden.proprio}</span>}
                 classes={{
                   root: classes.titleBar,
