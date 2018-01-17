@@ -62,12 +62,18 @@ class Header extends React.Component {
 	  alert("OMG")
   }
   componentDidMount(){
-	  //this.props.store.subscribe(this.samere)
-	  this.tryLogin();
-	  console.log(this);
+	  if(!this.props.connected){
+	  this.checkLogin();		  
+	  //alert("DIDMOUNT TRIGGERED");
+	  }
+
   }
-  componentDidUpdate(){
-	this.tryLogin();
+  componentDidUpdate(){	  
+	  if(this.props.connected!=this.state.connected){
+		console.log("component did update and props aint = state!"+this.props.connected);
+		this.checkLogin();		  
+	  }
+
   }
   
   getProfilePhoto(email){
@@ -83,15 +89,31 @@ class Header extends React.Component {
 	}); 
   }
   
-  tryLogin(){
+  checkLogin(){
+	console.log("check login...");
 	fetch('http://localhost/namt-backend/getInfoConnected.php', {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			if(data.info!="notconnected"){
 				this.setState({connected: true})
+				this.props.dispatch({ type: 'CONNECT' });
 				this.getProfilePhoto(data.info[0].email);
 			}
-		
+	}.bind(this))
+	.catch(function(error) {
+		console.log(error);
+	}); 
+  }
+  
+  tryLogout(){
+	console.log("logging out...");
+	fetch('http://localhost/namt-backend/Deconnexion.php', {credentials: 'include', method: 'get', accept: 'application/json'})
+		.then(function(resp){return resp.json()})
+		.then(function(data) {
+			if(data.Reponse=="Connexion inexistante" || data.Reponse=="Déconnexion Effectuer"){
+				this.setState({connected: false})
+				this.props.dispatch({ type: 'DISCONNECT' });
+			}
 	}.bind(this))
 	.catch(function(error) {
 		console.log(error);
@@ -169,7 +191,7 @@ class Header extends React.Component {
           </IconButton>	
 		  
           <Link to="/" style={styles.lien}><img src='/images/logo.png' style={styles.img}/></Link>
-			{this.state.connected?(this.state.photoLink==''?(<MenuAccount><FaceIcon /></MenuAccount>):(<MenuAccount><Avatar src={this.state.photoLink} /></MenuAccount>)):( 
+			{this.state.connected?(this.state.photoLink==''?(<MenuAccount logout={this.tryLogout.bind(this)}><FaceIcon /></MenuAccount>):(<MenuAccount logout={this.tryLogout.bind(this)}><Avatar src={this.state.photoLink} /></MenuAccount>)):( 
 			  <Button
 								component={Link}
 				  color="contrast"

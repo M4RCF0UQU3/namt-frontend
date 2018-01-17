@@ -8,11 +8,18 @@ import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 import { Manager, Target, Popper } from 'react-popper';
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
+
+import DashboardIcon from 'material-ui-icons/Dashboard';
 import InboxIcon from 'material-ui-icons/MoveToInbox';
 import DraftsIcon from 'material-ui-icons/Drafts';
 import SendIcon from 'material-ui-icons/Send';
+import RoomIcon from 'material-ui-icons/Room';
+import SearchIcon from 'material-ui-icons/Search';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
-
+import EventIcon from 'material-ui-icons/Event';
+import AccountBoxIcon from 'material-ui-icons/AccountBox';
+import HighlightOffIcon from 'material-ui-icons/HighlightOff';
+import MailOutlineIcon from 'material-ui-icons/MailOutline';
 
 const styles = {
   root: {
@@ -21,6 +28,9 @@ const styles = {
   popperClose: {
     pointerEvents: 'none',
   },
+  listText: {
+	  textAlign: 'left',
+  }
 };
 
 class MenuListComposition extends React.Component {
@@ -63,16 +73,40 @@ class MenuListComposition extends React.Component {
                   <MenuList role="menu">
                     <MenuItem onClick={this.handleClose}>
 						<ListItemIcon className={classes.icon}>
-							<SendIcon />
+							<RoomIcon />
 						</ListItemIcon>
-						<ListItemText classes={{ text: classes.text }} inset primary="Sent mail" />
+						<ListItemText className={classes.listText} primary="Ajouter Jardin" />
 					</MenuItem>
                     <MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
-						<DraftsIcon />
+						<SearchIcon />
 					  </ListItemIcon>
-					  <ListItemText classes={{ text: classes.text }} inset primary="Drafts" />
+					  <ListItemText className={classes.listText} primary="Recherche Jardin" />
 					</MenuItem>
-                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+						<DashboardIcon />
+					  </ListItemIcon>
+					  <ListItemText className={classes.listText} primary="Mes Jardins" />
+					</MenuItem>
+					<MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+						<EventIcon />
+					  </ListItemIcon>
+					  <ListItemText className={classes.listText} primary="Ajouter Evénement" />
+					</MenuItem>
+					<MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+						<AccountBoxIcon />
+					  </ListItemIcon>
+					  <ListItemText className={classes.listText} primary="Mon Profil" />
+					</MenuItem>
+					<MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+						<MailOutlineIcon />
+					  </ListItemIcon>
+					  <ListItemText className={classes.listText} primary="Demandes Jardin" />
+					</MenuItem>
+					<MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+						<HighlightOffIcon />
+					  </ListItemIcon>
+					  <ListItemText className={classes.listText} primary="Logout" onClick={this.props.logout}/>
+					</MenuItem>
                   </MenuList>
                 </Paper>
               </Grow>
