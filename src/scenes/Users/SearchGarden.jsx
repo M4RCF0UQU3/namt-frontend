@@ -99,7 +99,7 @@ class SearchGarden extends React.Component {
   */
   componentDidMount() {
 
-    var request = new Request(__CONFIG__.amtApi.prefixUrl + 'event-api/events', {
+    var request = new Request("http://localhost/namt-backend/filtreJardin.php", {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -108,7 +108,7 @@ class SearchGarden extends React.Component {
 
     fetch(request)
       .then( result => result.json()) // still returns a promise object, U need to chain it again
-      .then( items => this.setState({items}));
+      .then( items => this.setState({items}))
 
     // .then( response => {
     //    this.setState({items:response.body});
@@ -126,44 +126,54 @@ class SearchGarden extends React.Component {
     return (
       <div className={classes.root}>
         <SearchBar/>
-        <Typography type="headline" component="h3">
-          Résultat de la recherche :
-        </Typography>
-        <Grid container spacing={20} alignItems="stretch">
+        <Grid container spacing={16} alignItems="stretch">
           {gardens.map(garden => (
             <Grid item xs={12} sm={6}>
               <Card className={classes.card}>
                 <CardHeader
                   avatar={
                     <Avatar aria-label="Author" className={classes.avatar}>
-            {garden.author_name}
+                      {/*{photo proprio}*/}
                     </Avatar>
                   }
-                  title={garden.title}
-                  subheader={garden.date}
+                  title={garden.nom}
+                  subheader={garden.proprio}
                 />
+
                 <CardMedia
                   className={classes.media}
                   image={garden.photo}
-                  title={garden.title}
+                  title={garden.nom}
                 />
+
                 <CardContent>
+                  <Typography component="p">
+                    {garden.adresse}
+                  </Typography>
+                  <Typography component="p">
+                    {garden.ville}
+                  </Typography>
                   <Typography component="p">
                     {garden.description}
                   </Typography>
+                  <Typography component="p">
+                    {garden.info}
+                  </Typography>
                 </CardContent>
+
                 <CardActions disableActionSpacing>
-          <IconButton>
-            <EventIcon color="white" />
-          </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
-          <div className={classes.flexGrow} />
-          <Button raised>
-            Details
-          </Button>
+                  <IconButton>
+                    <EventIcon color="white" />
+                  </IconButton>
+                  <IconButton aria-label="Share">
+                    <ShareIcon />
+                  </IconButton>
+                  <div className={classes.flexGrow} />
+                  <Button raised>
+                    Consulter
+                  </Button>
                 </CardActions>
+
               </Card>
             </Grid>
             ))}
