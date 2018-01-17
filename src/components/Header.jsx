@@ -15,6 +15,7 @@ import Button from 'material-ui/Button';
 import Badge from 'material-ui/Badge';
 import FaceIcon from 'material-ui-icons/Face';
 import Avatar from 'material-ui/Avatar';
+import MenuAccount from './menus/MenuAccount.jsx';
 
 import { connect } from 'react-redux';
 
@@ -168,7 +169,7 @@ class Header extends React.Component {
           </IconButton>	
 		  
           <Link to="/" style={styles.lien}><img src='/images/logo.png' style={styles.img}/></Link>
-			{this.state.connected?(this.state.photoLink==''?(<FaceIcon />):(<Avatar src={this.state.photoLink} />)):( 
+			{this.state.connected?(this.state.photoLink==''?(<MenuAccount><FaceIcon /></MenuAccount>):(<MenuAccount><Avatar src={this.state.photoLink} /></MenuAccount>)):( 
 			  <Button
 								component={Link}
 				  color="contrast"
@@ -176,6 +177,7 @@ class Header extends React.Component {
 							  >
 								{'Connexion'}
 			</Button>)}
+			
         </Toolbar>
         {drawer}
       </AppBar>

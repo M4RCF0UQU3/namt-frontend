@@ -1,79 +1,91 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import IconButton from 'material-ui/IconButton';
-import AccountCircle from 'material-ui-icons/AccountCircle';
-import Drawer from 'material-ui/Drawer';
-import List from 'material-ui/List';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import Button from 'material-ui/Button';
+import { MenuItem, MenuList } from 'material-ui/Menu';
+import Grow from 'material-ui/transitions/Grow';
+import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
-import Divider from 'material-ui/Divider';
+import { Manager, Target, Popper } from 'react-popper';
+import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
+import InboxIcon from 'material-ui-icons/MoveToInbox';
+import DraftsIcon from 'material-ui-icons/Drafts';
+import SendIcon from 'material-ui-icons/Send';
+import { ListItemIcon, ListItemText } from 'material-ui/List';
+
 
 const styles = {
-  accountButton: {
-    marginLeft: 20,
-    marginRight: -12,
-    color: '#558822',
+  root: {
+    display: 'flex',
   },
-  list: {
-    width: "250px",
-    textAlign: "center",
-    fontVariant: "small-caps",
-  },
-  lien: {
-    textDecoration: 'none',
-    color: 'inherit',
+  popperClose: {
+    pointerEvents: 'none',
   },
 };
 
-class MenuAccount extends React.Component {
-  constructor(props) {
-      super(props);
-      this.state = { right: false };
-  }
+class MenuListComposition extends React.Component {
+  state = {
+    open: false,
+  };
 
-  toggleDrawer(side, open) {
-    this.setState({
-      [side]: open,
-    });
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
   };
 
   render() {
     const { classes } = this.props;
+    const { open } = this.state;
 
-    const menu = (
-      <div>
-        <List>Profil</List>
-        <List>Gérer jardin</List>
-        <List>Événements inscrits</List>
-        <Divider/>
-        <Link to="/blog" style={styles.lien}><List>Déconnexion</List></Link>
-      </div>
-    );
     return (
-      <div>
-        <IconButton
-          style={styles.accountButton}
-          onClick={this.toggleDrawer('right', true)}
-        >
-          <AccountCircle/>
-        </IconButton>
-        <Drawer
-          anchor="right"
-          open={this.state.right}
-          onRequestClose={this.toggleDrawer('right', false)}
-        >
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer('right', false)}
-            onKeyDown={this.toggleDrawer('right', false)}
-            className={classes.list}
+      <div className={classes.root}>
+        <Manager>
+          <Target>
+            <Button
+              aria-owns={open ? 'menu-list' : null}
+              aria-haspopup="true"
+              onClick={this.handleClick}
+            >
+			{this.props.children}
+            </Button>
+          </Target>
+          <Popper
+            placement="bottom-start"
+            eventsEnabled={open}
+            className={classNames({ [classes.popperClose]: !open })}
           >
-            {menu}
-          </div>
-        </Drawer>
+            <ClickAwayListener onClickAway={this.handleClose}>
+              <Grow in={open} id="menu-list" style={{ transformOrigin: '0 0 0' }}>
+                <Paper>
+                  <MenuList role="menu">
+                    <MenuItem onClick={this.handleClose}>
+						<ListItemIcon className={classes.icon}>
+							<SendIcon />
+						</ListItemIcon>
+						<ListItemText classes={{ text: classes.text }} inset primary="Sent mail" />
+					</MenuItem>
+                    <MenuItem onClick={this.handleClose}><ListItemIcon className={classes.icon}>
+						<DraftsIcon />
+					  </ListItemIcon>
+					  <ListItemText classes={{ text: classes.text }} inset primary="Drafts" />
+					</MenuItem>
+                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                  </MenuList>
+                </Paper>
+              </Grow>
+            </ClickAwayListener>
+          </Popper>
+        </Manager>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(MenuAccount);
+MenuListComposition.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(MenuListComposition);
