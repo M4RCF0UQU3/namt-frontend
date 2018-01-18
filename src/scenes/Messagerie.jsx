@@ -11,13 +11,24 @@ import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import Grid from 'material-ui/Grid';
 
+import FaceIcon from 'material-ui-icons/Face';
+import Avatar from 'material-ui/Avatar';
+
+import ExpansionPanel, {
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  ExpansionPanelActions,
+}  from 'material-ui/ExpansionPanel';
+import Typography from 'material-ui/Typography';
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import Chip from 'material-ui/Chip';
+import classNames from 'classnames';
+
+import AppBar from 'material-ui/AppBar';
+import Tabs, { Tab } from 'material-ui/Tabs';
 
 //Cards
-import ShowCard from "../components/cards/ShowCard.jsx";
-import GardenerCard from "../components/cards/GardenerCard.jsx";
-import LanderCard from "../components/cards/LanderCard.jsx";
-import EventsCard from "../components/cards/EventsCard.jsx";
-import ValueCard from "../components/cards/ValueCard.jsx";
+import MainPageCard from "../components/cards/MainPageCard.jsx";
 
 //import for scrolling
 import scrollToComponent from 'react-scroll-to-component';
@@ -40,53 +51,98 @@ const styles = {
 	root: {
 		flexGrow: 1,
 		marginTop: 30,
-    }
+    },	
+	tab: {
+		maxWidth: 1000,
+	},
+	column: {
+		flexBasis: '33.3%',
+	},	
+	column2: {
+		flexBasis: '66.6%',
+		textAlign: 'left'
+	}
 };
 
-class Home extends React.Component {
+class Messagerie extends React.Component {
 	constructor(props) {
       super(props);
-      this.state = {
-				address_entered: false,
-				email: '',
-				address_entered: false
-			};
-  }
+	}
+    state = {
+		value: 0,
+	  };
 
-	handleChange() {
-		this.setState({ address_entered: true });
-		//scrolls faster then element is added!
-		scrollToComponent(this.Map, { offset: -100, align: 'top', duration: 1500});
-	};
+	handleChange = (event, value) => {
+    this.setState({ value });
+  };
 
 	render() {
+		const { value } = this.state;
 		const { classes } = this.props;
-		const map = <Section><h1 style={styles.h1}>Carte</h1><MapGarden/></Section>;
-		return (
-			<Grid container spacing={24} alignItems="stretch">
+		const mesjardins = 	(<Grid container spacing={24} alignItems="stretch">
 				<Grid item xs={12}>
-					<Introduction />
+					<MainPageCard>
+					 <ExpansionPanel>
+						<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+							<div className={classes.column}>
+							<Typography className={classes.heading}>Votre jardin est trop beau!</Typography>
+					  </div>
+					</ExpansionPanelSummary>
+					<ExpansionPanelDetails className={classes.details}>
+					  
+					  <div className={classes.column}>
+						<Avatar> <FaceIcon /> </Avatar>
+					  </div>
+					  <div className={classNames(classes.column2, classes.helper)}>
+						<Typography type="caption">
+						  node_modules/leaflet/dist/images/layers-2x.png
+(Emitted value instead of an instance of Error) DEPRECATED. Configure optipng's optimizationLevel option in its own options. (optipng.optimizationLevel)
+ @ ./node_modules/css-loader!./node_modules/leaflet/dist/leaflet.css 6:8782-
+						</Typography>
+					  </div>
+					</ExpansionPanelDetails>
+					<Divider />
+					<ExpansionPanelActions>
+					  <Button dense>Accepter</Button>
+					  <Button dense color="primary">Refuser</Button>
+					</ExpansionPanelActions>
+				  </ExpansionPanel>
+				  
+					</MainPageCard>
 				</Grid>
-				<Grid item xs={12} sm={6}>
-					<GardenerCard/>
+				<Grid item xs={12}>
+					<MainPageCard>Jardin 2</MainPageCard>
 				</Grid>
-				<Grid item xs={12} sm={6}>
-					<LanderCard/>
+			</Grid>);
+		const mesdemandes = (<Grid container spacing={24} alignItems="stretch">
+				<Grid item xs={12}>
+					<MainPageCard>Demande 1</MainPageCard>
 				</Grid>
-				<Grid item xs={12} sm={6}>
-					<Link to="/project" style={styles.lien}><ShowCard/></Link>
+				<Grid item xs={12}>
+					<MainPageCard>Demande 2</MainPageCard>
 				</Grid>
-				<Grid item xs={12} sm={6}>
-					<EventsCard/>
-				</Grid>
-			</Grid>
+			</Grid>);
+		return (
+			<div>  <Tabs
+          value={this.state.value}
+  
+          onChange={this.handleChange}
+		  fullWidth
+		  
+        >
+          <Tab label="Demandes pour mes Jardins" style={styles.tab} />
+          <Tab label="Mes Demandes pour d'autres Jardins" style={styles.tab} />
+        </Tabs>
+		{value === 0 && mesjardins}
+        {value === 1 && mesdemandes} 	
+			</div>
 		);
    	}
 }
 
-Home.propTypes = {
+Messagerie.propTypes = {
 	children: PropTypes.node,
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(Messagerie);
