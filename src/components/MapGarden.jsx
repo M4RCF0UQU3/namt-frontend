@@ -56,7 +56,7 @@ class MapGarden extends React.Component {
 						
 			}.bind(this))
 			.catch(function(error) {
-				alert(error);
+				console.log(error);
 			}); 
   };
   
