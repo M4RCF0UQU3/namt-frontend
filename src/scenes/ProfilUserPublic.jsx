@@ -86,16 +86,32 @@ const styles = {
 class ProfilUserPublic extends React.Component{
   constructor(props) {
       super(props);
-      this.state = {
-        openDialog: false,
-        openSnack: false,
-        email: ''
-      };
+      this.state = { description_visible: [], items: [] };
+  }
+
+  componentDidMount() {
+
+    var request = new Request('http://localhost/namt-backend/getPhoto.php?email=@dmin', {
+      method: 'GET',
+    });
+
+    fetch(request)
+      .then( result => result.json()) // still returns a promise object, U need to chain it again
+      .then( items => this.setState({items}));
+
+    // .then( response => {
+    //    this.setState({items:response.body});
+    //
+    // }).catch( err => {
+    //   console.log("Data initialisation KO");
+    //    console.log(err);
+    // });
   }
 
 
   render(){
     const { classes } = this.props;
+    const photo = this.state.items.photo;
 
     return(
       <div>
@@ -104,11 +120,11 @@ class ProfilUserPublic extends React.Component{
             <Grid item xs={12}>
               <CardMedia
                 className={classes.media}
-                image="/images/chat.png"
+                image={photo}
                 title=""
               />
               <CardContent>
-                <Avatar alt="Chat" src="/images/chat.png" className={classes.bigAvatar} />
+                <Avatar alt="Chat" src={photo} className={classes.bigAvatar} />
                 <Typography type="headline" component="h3">
                   Michel
                 </Typography>

@@ -62,7 +62,7 @@ class ListLanderOwner extends React.Component {
     const gardens = this.state.items;
     return (
       <div className={classes.root}>
-        <GridList className={classes.gridList} cols={2}>
+        <GridList className={classes.gridList}>
           {gardens.map(garden => (
             <GridListTile key={garden.photo}>
               <img src={garden.photo} alt={garden.nom} />
