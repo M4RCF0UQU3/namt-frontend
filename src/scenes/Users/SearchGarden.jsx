@@ -7,7 +7,7 @@ import EventIcon from 'material-ui-icons/Event';
 import InfoIcon from 'material-ui-icons/Info';
 import Subheader from 'material-ui/List/ListSubheader';
 import Typography from 'material-ui/Typography';
-import SearchBar from '../../components/tools/SearchBar.jsx';
+import MapGarden from '../../components/MapGarden.jsx';
 import MainPageCard from '../../components/cards/MainPageCard.jsx';
 import Avatar from 'material-ui/Avatar';
 import Grid from 'material-ui/Grid';
@@ -18,6 +18,8 @@ import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 import ShareIcon from 'material-ui-icons/Share';
 import Button from 'material-ui/Button';
+import MarcCard from '../../components/cards/MarcCard.jsx';
+
 
 const styles = theme => ({
   root: {
@@ -122,7 +124,10 @@ class SearchGarden extends React.Component {
 
     return (
       <div className={classes.root}>
-        <SearchBar/>
+		<Grid container alignItems="stretch">
+					<MarcCard/>
+					<MapGarden />
+			</Grid>
         <Grid container spacing={16} alignItems="stretch">
           {gardens.map(garden => (
             <Grid item xs={12} sm={6}>
