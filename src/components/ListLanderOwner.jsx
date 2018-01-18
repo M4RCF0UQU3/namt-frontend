@@ -32,51 +32,21 @@ const styles = theme => ({
   }
 });
 
-import jardin from '../../public/images/jardin.jpg';
- 
-  const tileData = [
-    {
-      photo: jardin,
-      nom: 'Jardin',
-      proprio: 'Franck',
-    },
-    {
-      photo: jardin,
-      nom: 'Jardin',
-      proprio: 'Alfred',
-    },
-    {
-      photo: jardin,
-      nom: 'Jardin',
-      proprio: 'Annick',
-    },
-    {
-      photo: jardin,
-      nom: 'Jardin',
-      proprio: 'Gertrude',
-    },
-  ];
-
 class ListLanderOwner extends React.Component {
   constructor(props) {
       super(props);
       this.state = { description_visible: [], items: [] };
   }
-  /**
-  * Data initialisation from Garden service
-  */
+
   componentDidMount() {
 
-    var request = new Request("http://localhost/namt-backend/filtreJardin.php", {
+    var request = new Request('http://localhost/namt-backend/getJardins.php?email=@dmin', {
       method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
     });
 
     fetch(request)
       .then( result => result.json()) // still returns a promise object, U need to chain it again
-      .then( items => this.setState({items}))
+      .then( items => this.setState({items}));
 
     // .then( response => {
     //    this.setState({items:response.body});
@@ -88,10 +58,8 @@ class ListLanderOwner extends React.Component {
   }
 
   render(){
-
     const { classes } = this.props;
     const gardens = this.state.items;
-
     return (
       <div className={classes.root}>
         <GridList className={classes.gridList} cols={2}>

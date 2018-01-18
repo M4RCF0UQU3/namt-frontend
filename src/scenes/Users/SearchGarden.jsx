@@ -101,9 +101,6 @@ class SearchGarden extends React.Component {
 
     var request = new Request("http://localhost/namt-backend/filtreJardin.php", {
       method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
     });
 
     fetch(request)

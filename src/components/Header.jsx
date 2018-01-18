@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 
 const styles = {
   appbar: {
-  	backgroundColor: '#99CC66',
+  	backgroundColor: '#3A9D23',
   	position: 'fixed',
   },
   img: {
