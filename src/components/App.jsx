@@ -4,7 +4,7 @@ import {
   browserHistory,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 import Header from "./Header";
 import Footer from "./Footer";
 import Home from "../scenes/Home";
@@ -44,7 +44,7 @@ class App extends Component {
             <Route exact path='/profil' component={ProfilUserPublic}/>
             <Route  path='/search_garden' component={SearchGarden}/>
             <Route exact path='/accueilUser' component={ProfilUserPrivate}/>
-			<Route exact path='/messagerie' component={Messagerie}/>
+            <Route exact path='/messagerie' component={Messagerie}/>
           </div>
           <Footer/>
         </div>
