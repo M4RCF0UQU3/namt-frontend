@@ -50,6 +50,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "css-loader": "^0.28.7",
+    "enzyme": "^3.3.0",
     "file-loader": "^1.1.6",
     "image-webpack-loader": "^3.4.2",
     "jest": "^22.4.2",
