@@ -11,7 +11,7 @@ import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import Grid from 'material-ui/Grid';
 
-
+import { connect } from 'react-redux';
 //Cards
 import ShowCard from "../components/cards/ShowCard.jsx";
 import GardenerCard from "../components/cards/GardenerCard.jsx";
@@ -49,7 +49,9 @@ class Home extends React.Component {
       this.state = {
 				address_entered: false,
 				email: '',
-				address_entered: false
+				address_entered: false,
+				user: '',
+				connected: false
 			};
   }
 
@@ -58,7 +60,7 @@ class Home extends React.Component {
 		//scrolls faster then element is added!
 		scrollToComponent(this.Map, { offset: -100, align: 'top', duration: 1500});
 	};
-
+	
 	render() {
 		const { classes } = this.props;
 		const map = <Section><h1 style={styles.h1}>Carte</h1><MapGarden/></Section>;
@@ -88,5 +90,10 @@ Home.propTypes = {
 	children: PropTypes.node,
 	classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(Home);
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+	connected: state.connected
+  };
+}
+export default withStyles(styles)(connect(mapStateToProps)(Home));

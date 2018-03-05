@@ -15,7 +15,7 @@ injectTapEventPlugin();
 
 const initialState = {
   connected: false,
-  user:''
+  user: ''
 };
 
 
