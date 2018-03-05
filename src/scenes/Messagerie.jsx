@@ -70,12 +70,15 @@ class Messagerie extends React.Component {
 	constructor(props) {
       super(props);
 	  this.loadMessages = this.loadMessages.bind(this);
+	  this.getProfilePhoto = this.getProfilePhoto.bind(this);
+	  this.linkbyUser = this.linkbyUser.bind(this);
 	}
     state = {
 		value: 0,
 		demandesPourJardins: [],
 		mesDemandes: [],
-		user: ''
+		user: '',
+		avatars: []
 	  };
 	
 	componentDidMount(){
@@ -90,15 +93,30 @@ class Messagerie extends React.Component {
 	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
-			if(data.info!="notconnected")
-				return data.photo;
+			
+			if(data.info!="notconnected"){
+				this.setState(prevState => ({
+					avatars: {
+						...prevState.avatars,
+						[email]: data.photo
+					}
+				}))
+				//this.setState({avatars: {...this.state.avatars, {email, data.photo}}});
+			}
+			console.log(this.state);
 		
 	}.bind(this))
 	.catch(function(error) {
 		alert(error);
 	}); 
   }
-  
+  linkbyUser(user){
+	  for (name of state.avatars){
+		  if (name[0] == user)
+			return name[1]; 
+	  }
+	  return "none";
+  }
   loadMessages() {
 		fetch('http://localhost/namt-backend/getMessages.php', {
           method: 'GET',
@@ -108,17 +126,15 @@ class Messagerie extends React.Component {
           credentials: 'include'
         }).then(function(resp){return resp.json()})
 				.then(function(data) {
-					console.log(this.props.user)
 					//trier entre demandes pour Jardins et mes demandes.
-					for (let msg of data.message){
+					for (let msg of data.message){				
 						if(msg.demandeur==this.props.user){
-							this.setState({ mesDemandes: [...this.state.mesDemandes,msg]});
-							
+							this.setState({ mesDemandes: [...this.state.mesDemandes,msg]});	
 						} else {
 							this.setState({ demandesPourJardins: [...this.state.demandesPourJardins,msg]});
 						}
-						console.log(msg);
-					}				
+						this.getProfilePhoto(msg.demandeur);						
+					}
 			}.bind(this))
 			.catch(function(error) {
 				alert(error);
@@ -127,6 +143,7 @@ class Messagerie extends React.Component {
 	render() {
 		const { value } = this.state;
 		const { classes } = this.props;
+		const avs = this.state.avatars;
 		const mesjardins = 	this.state.demandesPourJardins.map( message => (<Grid container spacing={24} alignItems="stretch">
 				<Grid item xs={12}>
 					<Card>
@@ -136,10 +153,9 @@ class Messagerie extends React.Component {
 								<Typography className={classes.heading}>{message.date} {message.sujet}</Typography>
 						  </div>
 						</ExpansionPanelSummary>
-						<ExpansionPanelDetails className={classes.details}>
-						  
+						<ExpansionPanelDetails className={classes.details}>  
 						  <div className={classes.column}>
-							<Avatar> <FaceIcon /> </Avatar>
+							<Avatar src={this.state.avatars[message.demandeur]} />
 						  </div>
 						  <div className={classNames(classes.column2, classes.helper)}>
 							<Typography type="caption">
@@ -183,9 +199,6 @@ class Messagerie extends React.Component {
 						</ExpansionPanelActions>
 					  </ExpansionPanel>
 					</Card>
-				</Grid>
-				<Grid item xs={12}>
-					<Card>Demande 2</Card>
 				</Grid>
 			</Grid>));
 		return (
