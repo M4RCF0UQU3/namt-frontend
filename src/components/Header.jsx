@@ -57,6 +57,7 @@ class Header extends React.Component {
   componentDidUpdate(){	  
 	  if(this.props.connected!=this.state.connected){
 		console.log("component did update, props.connected: "+this.props.connected+" this.state.connected: "+this.state.connected);
+		console.log("user: "+this.props.user);
 		this.checkLogin();	
 		console.log(this.props);		
 	  }

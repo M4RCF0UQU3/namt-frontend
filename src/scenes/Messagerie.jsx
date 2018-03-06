@@ -11,6 +11,8 @@ import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import Grid from 'material-ui/Grid';
 
+import { connect } from 'react-redux';
+
 import FaceIcon from 'material-ui-icons/Face';
 import Avatar from 'material-ui/Avatar';
 
@@ -28,7 +30,7 @@ import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
 //Cards
-import MainPageCard from "../components/cards/MainPageCard.jsx";
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 
 //import for scrolling
 import scrollToComponent from 'react-scroll-to-component';
@@ -56,7 +58,7 @@ const styles = {
 		maxWidth: 1000,
 	},
 	column: {
-		flexBasis: '33.3%',
+		marginRight: 20,
 	},	
 	column2: {
 		flexBasis: '66.6%',
@@ -67,69 +69,144 @@ const styles = {
 class Messagerie extends React.Component {
 	constructor(props) {
       super(props);
+	  this.loadMessages = this.loadMessages.bind(this);
+	  this.getProfilePhoto = this.getProfilePhoto.bind(this);
+	  this.linkbyUser = this.linkbyUser.bind(this);
 	}
     state = {
 		value: 0,
+		demandesPourJardins: [],
+		mesDemandes: [],
+		user: '',
+		avatars: []
 	  };
-
+	
+	componentDidMount(){
+		this.loadMessages();
+    }
+	
 	handleChange = (event, value) => {
     this.setState({ value });
   };
 
+  getProfilePhoto(email){
+	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
+		.then(function(resp){return resp.json()})
+		.then(function(data) {
+			
+			if(data.info!="notconnected"){
+				this.setState(prevState => ({
+					avatars: {
+						...prevState.avatars,
+						[email]: data.photo
+					}
+				}))
+				//this.setState({avatars: {...this.state.avatars, {email, data.photo}}});
+			}
+			console.log(this.state);
+		
+	}.bind(this))
+	.catch(function(error) {
+		alert(error);
+	}); 
+  }
+  linkbyUser(user){
+	  for (name of state.avatars){
+		  if (name[0] == user)
+			return name[1]; 
+	  }
+	  return "none";
+  }
+  loadMessages() {
+		fetch('http://localhost/namt-backend/getMessages.php', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json'
+          },
+          credentials: 'include'
+        }).then(function(resp){return resp.json()})
+				.then(function(data) {
+					//trier entre demandes pour Jardins et mes demandes.
+					for (let msg of data.message){				
+						if(msg.demandeur==this.props.user){
+							this.setState({ mesDemandes: [...this.state.mesDemandes,msg]});	
+						} else {
+							this.setState({ demandesPourJardins: [...this.state.demandesPourJardins,msg]});
+						}
+						this.getProfilePhoto(msg.demandeur);						
+					}
+			}.bind(this))
+			.catch(function(error) {
+				alert(error);
+			}); 
+   };
 	render() {
 		const { value } = this.state;
 		const { classes } = this.props;
-		const mesjardins = 	(<Grid container spacing={24} alignItems="stretch">
+		const avs = this.state.avatars;
+		const mesjardins = 	this.state.demandesPourJardins.map( message => (<Grid container spacing={24} alignItems="stretch">
 				<Grid item xs={12}>
-					<MainPageCard>
-					 <ExpansionPanel>
-						<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-							<div className={classes.column}>
-							<Typography className={classes.heading}>Votre jardin est trop beau!</Typography>
-					  </div>
-					</ExpansionPanelSummary>
-					<ExpansionPanelDetails className={classes.details}>
-					  
-					  <div className={classes.column}>
-						<Avatar> <FaceIcon /> </Avatar>
-					  </div>
-					  <div className={classNames(classes.column2, classes.helper)}>
-						<Typography type="caption">
-						  node_modules/leaflet/dist/images/layers-2x.png
-(Emitted value instead of an instance of Error) DEPRECATED. Configure optipng's optimizationLevel option in its own options. (optipng.optimizationLevel)
- @ ./node_modules/css-loader!./node_modules/leaflet/dist/leaflet.css 6:8782-
-						</Typography>
-					  </div>
-					</ExpansionPanelDetails>
-					<Divider />
-					<ExpansionPanelActions>
-					  <Button dense>Accepter</Button>
-					  <Button dense color="primary">Refuser</Button>
-					</ExpansionPanelActions>
-				  </ExpansionPanel>
-				  
-					</MainPageCard>
+					<Card>
+						 <ExpansionPanel>
+							<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+								<div className={classes.column}>
+								<Typography className={classes.heading}>{message.date} {message.sujet}</Typography>
+						  </div>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails className={classes.details}>  
+						  <div className={classes.column}>
+							<Avatar src={this.state.avatars[message.demandeur]} />
+						  </div>
+						  <div className={classNames(classes.column2, classes.helper)}>
+							<Typography type="caption">
+							  {message.commentaire}
+							</Typography>
+						  </div>
+						</ExpansionPanelDetails>
+						<Divider />
+						<ExpansionPanelActions>
+						  <Button dense>Accepter</Button>
+						  <Button dense color="primary">Refuser</Button>
+						</ExpansionPanelActions>
+					  </ExpansionPanel>
+					</Card>
 				</Grid>
+			</Grid>));
+		const mesdemandes = this.state.mesDemandes.map( message =>(<Grid container spacing={24} alignItems="stretch">
 				<Grid item xs={12}>
-					<MainPageCard>Jardin 2</MainPageCard>
+					<Card>
+						 <ExpansionPanel>
+							<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+								<div className={classes.column}>
+								<Typography className={classes.heading}>{message.sujet}</Typography>
+						  </div>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails className={classes.details}>
+						  
+						  <div className={classes.column}>
+							<Avatar> <FaceIcon /> </Avatar>
+						  </div>
+						  <div className={classNames(classes.column2, classes.helper)}>
+							<Typography type="caption">
+							  {message.commentaire}
+							</Typography>
+						  </div>
+						</ExpansionPanelDetails>
+						<Divider />
+						<ExpansionPanelActions>
+						  <Button dense>Supprimer</Button>
+						  <Button dense color="primary">Retirer</Button>
+						</ExpansionPanelActions>
+					  </ExpansionPanel>
+					</Card>
 				</Grid>
-			</Grid>);
-		const mesdemandes = (<Grid container spacing={24} alignItems="stretch">
-				<Grid item xs={12}>
-					<MainPageCard>Demande 1</MainPageCard>
-				</Grid>
-				<Grid item xs={12}>
-					<MainPageCard>Demande 2</MainPageCard>
-				</Grid>
-			</Grid>);
+			</Grid>));
 		return (
 			<div>  <Tabs
           value={this.state.value}
   
           onChange={this.handleChange}
-		  fullWidth
-		  
-        >
+		  fullWidth>
           <Tab label="Demandes pour mes Jardins" style={styles.tab} />
           <Tab label="Mes Demandes pour d'autres Jardins" style={styles.tab} />
         </Tabs>
@@ -140,9 +217,16 @@ class Messagerie extends React.Component {
    	}
 }
 
+function mapStateToProps(state) {
+  return {
+	connected: state.connected,
+	user: state.user
+  };
+}
+
 Messagerie.propTypes = {
 	children: PropTypes.node,
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Messagerie);
+export default withStyles(styles)((connect(mapStateToProps)(Messagerie)));

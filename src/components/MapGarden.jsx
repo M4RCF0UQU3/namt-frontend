@@ -90,7 +90,7 @@ class MapGarden extends React.Component {
 						  value={this.state.rec}
 						/>
 						<Button raised onClick={this.handleSubmit } >
-						  Appuie Bonhomme
+						  Recherche
 						</Button>
 					</form>
 					<Map center={position} zoom={12}>
