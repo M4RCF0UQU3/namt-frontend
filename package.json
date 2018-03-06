@@ -36,7 +36,7 @@
     "start": "webpack-dev-server",
     "build-dev": "webpack -d",
     "build-prod": "webpack -p",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
