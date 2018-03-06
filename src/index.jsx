@@ -15,7 +15,8 @@ injectTapEventPlugin();
 
 const initialState = {
   connected: false,
-  user: ''
+  user: '',
+  photo: ''
 };
 
 
@@ -32,6 +33,11 @@ function reducer(state = initialState, action) {
 	case 'SETUSER':
       return Object.assign({}, state, {
         user: action.value
+      });
+	case 'SETPHOTO':
+	console.log("setting "+action.value);
+      return Object.assign({}, state, {
+        photo: action.value
       });
     default:
       return state;

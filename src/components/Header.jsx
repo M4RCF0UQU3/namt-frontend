@@ -57,7 +57,6 @@ class Header extends React.Component {
   componentDidUpdate(){	  
 	  if(this.props.connected!=this.state.connected){
 		console.log("component did update, props.connected: "+this.props.connected+" this.state.connected: "+this.state.connected);
-		console.log("user: "+this.props.user);
 		this.checkLogin();	
 		console.log(this.props);		
 	  }
@@ -68,8 +67,11 @@ class Header extends React.Component {
 	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
-			if(data.info!="notconnected")
+			if(data.info!="notconnected"){
+				console.log("setting photo");
 				this.setState({photoLink: data.photo});
+				this.props.dispatch({ type: 'SETPHOTO', value: data.photo});
+			}
 		
 	}.bind(this))
 	.catch(function(error) {
@@ -200,9 +202,12 @@ class Header extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
-	connected: state.connected
+	connected: state.connected,
+	photo: state.photoLink,
   };
 }
+
+
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };

@@ -29,6 +29,8 @@ import ListLanderExploit from '../components/ListLanderExploit.jsx';
 {/*import Test from '../components/Test.jsx';*/}
 
 
+import { connect } from 'react-redux';
+
 const styles = {
   media: {
     height: '30vh',
@@ -86,33 +88,37 @@ const styles = {
 class ProfilUserPublic extends React.Component{
   constructor(props) {
       super(props);
-      this.state = { description_visible: [], items: [] };
+	  this.getProfilePhoto = this.getProfilePhoto.bind(this);
   }
-
+  
+  state = {
+		photo: '',			//profile image
+		accountType: 'user',	//profile type
+		user: '',
+		connected: false
+	};
+  
+  getProfilePhoto(email){
+	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
+		.then(function(resp){return resp.json()})
+		.then(function(data) {
+			if(data.info!="notconnected")
+				this.setState({photoLink: data.photo});
+		
+	}.bind(this))
+	.catch(function(error) {
+		alert(error);
+	}); 
+  }
   componentDidMount() {
-
-    var request = new Request('http://localhost/namt-backend/getPhoto.php?email=@dmin', {
-      method: 'GET',
-    });
-
-    fetch(request)
-      .then( result => result.json()) // still returns a promise object, U need to chain it again
-      .then( items => this.setState({items}));
-
-    // .then( response => {
-    //    this.setState({items:response.body});
-    //
-    // }).catch( err => {
-    //   console.log("Data initialisation KO");
-    //    console.log(err);
-    // });
+	  console.log("disconnect dispatched");
+	  this.props.dispatch({ type: 'DISCONNECT' });
   }
 
 
   render(){
     const { classes } = this.props;
-    const photo = this.state.items.photo;
-
+    const photo = this.state.photo;	
     return(
       <div>
         <Card className={classes.card}>
@@ -124,7 +130,7 @@ class ProfilUserPublic extends React.Component{
                 title=""
               />
               <CardContent>
-                <Avatar alt="Chat" src={photo} className={classes.bigAvatar} />
+                <Avatar alt="Chat" src={this.props.photo} className={classes.bigAvatar} />
                 <Typography type="headline" component="h3">
                   Michel
                 </Typography>
@@ -132,6 +138,7 @@ class ProfilUserPublic extends React.Component{
                   petite phrase d'accroche
                 </Typography>
               </CardContent>
+			  <Button onClick={() => console.log(this.props)}>touch me </Button>
             </Grid>
               
             <Grid item xs={12}>
@@ -170,4 +177,12 @@ ProfilUserPublic.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProfilUserPublic);
+function mapStateToProps(state) {
+  return {
+	user: state.user,
+	connected: state.connected,
+	photo: state.photo
+  };
+}
+
+export default withStyles(styles)(connect(mapStateToProps)(ProfilUserPublic));
