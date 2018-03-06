@@ -11,7 +11,7 @@ import Grid from 'material-ui/Grid';
 
 
 //Cards
-import Chip from '../../components/chips/Chips.jsx';
+import TitlebarGridList from '../../components/chips/TitlebarGridList.jsx';
 
 const styles = {
 	container: {
@@ -47,7 +47,7 @@ class Home extends React.Component {
 		return (
 			<Grid container spacing={20} alignItems="stretch">
 				<Grid item xs={12} sm={6}>
-					<Chip/>
+					<TitlebarGridList/>
 				</Grid>
 			</Grid>
 		);
