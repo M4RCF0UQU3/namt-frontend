@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App.jsx';
+//import App from './App.jsx';
 
-expect.extend({
-  
-});
-
-test('nom du test', () => {
-  expect();
+test.skip('nom du test', () => {
+	const val = 12;
+  expect(val).toBe(12);
 });

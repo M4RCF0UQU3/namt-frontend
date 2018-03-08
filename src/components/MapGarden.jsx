@@ -8,7 +8,7 @@ import Button from 'material-ui/Button';
 //import SearchBar from 'C:/Users/Marc/namt-frontend/src/components/tools/SearchBar.jsx';
 import TextField from 'material-ui/TextField';
 
-
+var path = require('../backendPath.js').backendpath
 
 
 
@@ -39,7 +39,7 @@ class MapGarden extends React.Component {
 		var requaeton;
 		requaeton='?s='+this.state.rec;
 
-	  	fetch('http://localhost/namt-backend/filtreJardin.php'+requaeton, {
+	  	fetch(path+'/filtreJardin.php'+requaeton, {
 				method: 'get'}, {mode: 'cors'}
 				)
 				.then(function(resp){return resp.json()})

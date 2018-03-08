@@ -40,6 +40,9 @@ import validator from 'validator' ;
 //import Newsletter from '../components/Newsletter.jsx';
 import Introduction from '../components/Introduction.jsx';
 
+var path = require('../backendPath.js').backendpath
+
+
 const styles = {
 	container: {
 		backgroundImage: 'url(images/setzlinge.jpeg)',
@@ -90,7 +93,7 @@ class Messagerie extends React.Component {
   };
 
   getProfilePhoto(email){
-	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
+	fetch(path+'/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			
@@ -103,7 +106,6 @@ class Messagerie extends React.Component {
 				}))
 				//this.setState({avatars: {...this.state.avatars, {email, data.photo}}});
 			}
-			console.log(this.state);
 		
 	}.bind(this))
 	.catch(function(error) {
@@ -118,7 +120,7 @@ class Messagerie extends React.Component {
 	  return "none";
   }
   loadMessages() {
-		fetch('http://localhost/namt-backend/getMessages.php', {
+		fetch(path+'/getMessages.php', {
           method: 'GET',
           headers: {
             Accept: 'application/json'
@@ -126,15 +128,41 @@ class Messagerie extends React.Component {
           credentials: 'include'
         }).then(function(resp){return resp.json()})
 				.then(function(data) {
-					//trier entre demandes pour Jardins et mes demandes.
+					//trier entre demandes pour Jardins et mes demandes. et creer un objet par jardin
+					let demandesPourmoi = [{
+							id: 404,
+							nom: "notfoundgarden",
+							icon: "",
+							demandes: []
+						}];
+					//create all garden objects
+					
 					for (let msg of data.message){				
 						if(msg.demandeur==this.props.user){
 							this.setState({ mesDemandes: [...this.state.mesDemandes,msg]});	
 						} else {
-							this.setState({ demandesPourJardins: [...this.state.demandesPourJardins,msg]});
+							//check if id of garden is in array of demandes
+							let found = demandesPourmoi.find(function(element) {
+							  return element.id = msg.id_jardin;
+							});
+							//doesnt exist
+							if (typeof found === 'undefined'){
+								demandesPourmoi.push({
+									id: msg.id_jardin,
+									nom: msg.nom_jardin,
+									icon: msg.icon_jardin,
+									demandes: [msg]
+								});
+							} else {
+								found.demandes.push(msg);
+							}
 						}
+						console.log("now settings damndes");
+						this.setState({ demandesPourJardins: demandesPourmoi});
+						console.log(this.state);
 						this.getProfilePhoto(msg.demandeur);						
 					}
+					
 			}.bind(this))
 			.catch(function(error) {
 				alert(error);
@@ -144,34 +172,7 @@ class Messagerie extends React.Component {
 		const { value } = this.state;
 		const { classes } = this.props;
 		const avs = this.state.avatars;
-		const mesjardins = 	this.state.demandesPourJardins.map( message => (<Grid container spacing={24} alignItems="stretch">
-				<Grid item xs={12}>
-					<Card>
-						 <ExpansionPanel>
-							<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-								<div className={classes.column}>
-								<Typography className={classes.heading}>{message.date} {message.sujet}</Typography>
-						  </div>
-						</ExpansionPanelSummary>
-						<ExpansionPanelDetails className={classes.details}>  
-						  <div className={classes.column}>
-							<Avatar src={this.state.avatars[message.demandeur]} />
-						  </div>
-						  <div className={classNames(classes.column2, classes.helper)}>
-							<Typography type="caption">
-							  {message.commentaire}
-							</Typography>
-						  </div>
-						</ExpansionPanelDetails>
-						<Divider />
-						<ExpansionPanelActions>
-						  <Button dense>Accepter</Button>
-						  <Button dense color="primary">Refuser</Button>
-						</ExpansionPanelActions>
-					  </ExpansionPanel>
-					</Card>
-				</Grid>
-			</Grid>));
+		
 		const mesdemandes = this.state.mesDemandes.map( message =>(<Grid container spacing={24} alignItems="stretch">
 				<Grid item xs={12}>
 					<Card>
@@ -184,7 +185,7 @@ class Messagerie extends React.Component {
 						<ExpansionPanelDetails className={classes.details}>
 						  
 						  <div className={classes.column}>
-							<Avatar> <FaceIcon /> </Avatar>
+							<Avatar src={this.state.avatars[message.demandeur]}/>
 						  </div>
 						  <div className={classNames(classes.column2, classes.helper)}>
 							<Typography type="caption">
@@ -210,7 +211,7 @@ class Messagerie extends React.Component {
           <Tab label="Demandes pour mes Jardins" style={styles.tab} />
           <Tab label="Mes Demandes pour d'autres Jardins" style={styles.tab} />
         </Tabs>
-		{value === 0 && mesjardins}
+		{value === 0 && "hellooo"}
         {value === 1 && mesdemandes} 	
 			</div>
 		);

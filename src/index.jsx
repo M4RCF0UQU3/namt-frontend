@@ -7,6 +7,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './components/App'; // Our custom react component
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -16,7 +18,11 @@ injectTapEventPlugin();
 const initialState = {
   connected: false,
   user: '',
-  photo: ''
+  photo: '',
+  description: '',
+  pseudo: '',
+  nom: '',
+  prenom: '',
 };
 
 
@@ -35,9 +41,22 @@ function reducer(state = initialState, action) {
         user: action.value
       });
 	case 'SETPHOTO':
-	console.log("setting "+action.value);
+	console.log("SETPHOTO:" +action.value);
       return Object.assign({}, state, {
         photo: action.value
+      });
+	case 'SETDESCRIPTION':
+      return Object.assign({}, state, {
+        description: action.value
+      });
+	case 'SETNOM':
+      return Object.assign({}, state, {
+        nom: action.value
+      });
+	case 'SETPRENOM':
+		console.log("SETPRENOM:" +action.value);
+      return Object.assign({}, state, {
+        prenom: action.value
       });
     default:
       return state;
@@ -45,7 +64,6 @@ function reducer(state = initialState, action) {
 }
 
 const store = createStore(reducer);
-
 const MainApp = () => (
   <Provider store={store}>
     <App />
