@@ -43,6 +43,7 @@ class Home extends React.Component {
 
 	render() {
 		const { classes } = this.props;
+		console.log("rien rien !!");
 		return (
 			<Grid container spacing={20} alignItems="stretch">
 				<Grid item xs={12} sm={6}>
