@@ -75,7 +75,6 @@ class Header extends React.Component {
 				this.setState({photoLink: data.photo});
 				this.props.dispatch({ type: 'SETPHOTO', value: data.photo});
 			}
-		
 	}.bind(this))
 	.catch(function(error) {
 		alert(error);
@@ -88,12 +87,14 @@ class Header extends React.Component {
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			if(data.Reponse!="Veillez vous connecte"){
+				console.log(data.info[0]);
 				this.setState({connected: true})
 				this.props.dispatch({ type: 'CONNECT' });
 				this.props.dispatch({ type: 'SETPHOTO', value: data.info[0].photo});
 				this.props.dispatch({ type: 'SETDESCRIPTION', value: data.info[0].description});
 				this.props.dispatch({ type: 'SETNOM', value: data.info[0].nom});
 				this.props.dispatch({ type: 'SETPRENOM', value: data.info[0].prenom});
+				this.setState({photoLink: data.info[0].photo});
 				console.log(this.props);
 			} else {
 				console.log("NOT CONNECTED");
