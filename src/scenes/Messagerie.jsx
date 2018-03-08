@@ -30,7 +30,7 @@ import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
 //Cards
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
 
 //import for scrolling
 import scrollToComponent from 'react-scroll-to-component';
@@ -81,7 +81,8 @@ class Messagerie extends React.Component {
 		demandesPourJardins: [],
 		mesDemandes: [],
 		user: '',
-		avatars: []
+		avatars: [],
+		numberUsers: [],
 	  };
 	
 	componentDidMount(){
@@ -129,21 +130,14 @@ class Messagerie extends React.Component {
         }).then(function(resp){return resp.json()})
 				.then(function(data) {
 					//trier entre demandes pour Jardins et mes demandes. et creer un objet par jardin
-					let demandesPourmoi = [{
-							id: 404,
-							nom: "notfoundgarden",
-							icon: "",
-							demandes: []
-						}];
-					//create all garden objects
-					
+					let demandesPourmoi = [];
 					for (let msg of data.message){				
 						if(msg.demandeur==this.props.user){
 							this.setState({ mesDemandes: [...this.state.mesDemandes,msg]});	
 						} else {
 							//check if id of garden is in array of demandes
 							let found = demandesPourmoi.find(function(element) {
-							  return element.id = msg.id_jardin;
+							  return element.id === msg.id_jardin;
 							});
 							//doesnt exist
 							if (typeof found === 'undefined'){
@@ -157,9 +151,7 @@ class Messagerie extends React.Component {
 								found.demandes.push(msg);
 							}
 						}
-						console.log("now settings damndes");
 						this.setState({ demandesPourJardins: demandesPourmoi});
-						console.log(this.state);
 						this.getProfilePhoto(msg.demandeur);						
 					}
 					
@@ -173,7 +165,8 @@ class Messagerie extends React.Component {
 		const { classes } = this.props;
 		const avs = this.state.avatars;
 		
-		const mesdemandes = this.state.mesDemandes.map( message =>(<Grid container spacing={24} alignItems="stretch">
+		const mesdemandes = this.state.mesDemandes.map( message =>(
+			<Grid container spacing={24} alignItems="stretch">
 				<Grid item xs={12}>
 					<Card>
 						 <ExpansionPanel>
@@ -202,6 +195,46 @@ class Messagerie extends React.Component {
 					</Card>
 				</Grid>
 			</Grid>));
+			
+		const demandespourMoi = 
+			<Grid container spacing={24} alignItems="stretch"> 
+				{this.state.demandesPourJardins.map( jardin =>(
+				<Grid item xs={12}>
+					<Card>
+						<CardHeader
+						avatar={
+						  <Avatar src={jardin.icon}/>
+						} title={jardin.nom} subheader="5/6 Jardiniers actifs dans ce jardin" />
+						{jardin.demandes.map(demande =>(
+							<Card>
+							 <ExpansionPanel>
+								<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+									<div className={classes.column}>
+									<Typography className={classes.heading}>{demande.sujet}</Typography>
+							  </div>
+								</ExpansionPanelSummary>
+								<ExpansionPanelDetails className={classes.details}>
+								  
+								  <div className={classes.column}>
+									<Avatar src={this.state.avatars[demande.demandeur]}/>
+								  </div>
+								  <div className={classNames(classes.column2, classes.helper)}>
+									<Typography type="caption">
+									  {demande.commentaire}
+									</Typography>
+								  </div>
+								</ExpansionPanelDetails>
+								<Divider />
+								<ExpansionPanelActions>
+								  <Button dense>Refuser</Button>
+								  <Button dense color="primary">Accepter</Button>
+								</ExpansionPanelActions>
+							 </ExpansionPanel>
+							</Card>
+						))}
+					</Card>
+				</Grid>))}
+			</Grid>;
 		return (
 			<div>  <Tabs
           value={this.state.value}
@@ -211,7 +244,7 @@ class Messagerie extends React.Component {
           <Tab label="Demandes pour mes Jardins" style={styles.tab} />
           <Tab label="Mes Demandes pour d'autres Jardins" style={styles.tab} />
         </Tabs>
-		{value === 0 && "hellooo"}
+		{value === 0 && demandespourMoi}
         {value === 1 && mesdemandes} 	
 			</div>
 		);
