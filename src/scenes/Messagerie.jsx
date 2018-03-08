@@ -40,6 +40,9 @@ import validator from 'validator' ;
 //import Newsletter from '../components/Newsletter.jsx';
 import Introduction from '../components/Introduction.jsx';
 
+var path = require('../backendPath.js').backendpath
+
+
 const styles = {
 	container: {
 		backgroundImage: 'url(images/setzlinge.jpeg)',
@@ -90,7 +93,7 @@ class Messagerie extends React.Component {
   };
 
   getProfilePhoto(email){
-	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
+	fetch(path+'/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			
@@ -118,7 +121,7 @@ class Messagerie extends React.Component {
 	  return "none";
   }
   loadMessages() {
-		fetch('http://localhost/namt-backend/getMessages.php', {
+		fetch(path+'/getMessages.php', {
           method: 'GET',
           headers: {
             Accept: 'application/json'

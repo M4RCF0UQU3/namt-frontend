@@ -19,6 +19,9 @@ import MenuAccount from './menus/MenuAccount.jsx';
 
 import { connect } from 'react-redux';
 
+
+var path = require('../backendPath.js').backendpath
+
 const styles = {
   appbar: {
   	backgroundColor: '#3A9D23',
@@ -64,7 +67,7 @@ class Header extends React.Component {
   }
   
   getProfilePhoto(email){
-	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
+	fetch(path+'/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			if(data.info!="notconnected"){
@@ -81,13 +84,17 @@ class Header extends React.Component {
   
   checkLogin(){
 	console.log("check login...");
-	fetch('http://localhost/namt-backend/getInfoConnected.php', {credentials: 'include', method: 'get', accept: 'application/json'})
+	fetch(path+'/getInfoConnected.php', {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			if(data.Reponse!="Veillez vous connecte"){
 				this.setState({connected: true})
 				this.props.dispatch({ type: 'CONNECT' });
-				this.getProfilePhoto(data.info[0].email);
+				this.props.dispatch({ type: 'SETPHOTO', value: data.info[0].photo});
+				this.props.dispatch({ type: 'SETDESCRIPTION', value: data.info[0].description});
+				this.props.dispatch({ type: 'SETNOM', value: data.info[0].nom});
+				this.props.dispatch({ type: 'SETPRENOM', value: data.info[0].prenom});
+				console.log(this.props);
 			} else {
 				console.log("NOT CONNECTED");
 			}
@@ -99,7 +106,7 @@ class Header extends React.Component {
   
   tryLogout(){
 	console.log("logging out...");
-	fetch('http://localhost/namt-backend/Deconnexion.php', {credentials: 'include', method: 'get', accept: 'application/json'})
+	fetch(path+'/Deconnexion.php', {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			if(data.Reponse=="Connexion inexistante" || data.Reponse=="Déconnexion Effectuer"){

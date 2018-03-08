@@ -16,7 +16,10 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import { connect } from 'react-redux';
 
-//pour mamadou
+
+
+var path = require('../backendPath.js').backendpath
+
 const primary = green[500];
 const accent = red['A200'];
 
@@ -89,7 +92,7 @@ class SignIn extends React.Component{
   
   handleSubmit() {
 		this.setCharging();
-		fetch('http://localhost/namt-backend/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
+		fetch(path+'/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
           method: 'GET',
           headers: {
             Accept: 'application/json'

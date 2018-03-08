@@ -30,7 +30,7 @@ import ListLanderExploit from '../components/ListLanderExploit.jsx';
 
 
 import { connect } from 'react-redux';
-
+var path = require('../backendPath.js').backendpath
 const styles = {
   media: {
     height: '30vh',
@@ -99,7 +99,7 @@ class ProfilUserPublic extends React.Component{
 	};
   
   getProfilePhoto(email){
-	fetch('http://localhost/namt-backend/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
+	fetch(path+'/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			if(data.info!="notconnected")
