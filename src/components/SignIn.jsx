@@ -91,34 +91,6 @@ class SignIn extends React.Component {
   };
 
   handleSubmit() {
-<<<<<<< HEAD
-    this.setCharging();
-    fetch('http://localhost/namt-backend/TraitConnexion.php?email=' + this.state.email + '&password=' + this.state.password, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json'
-      },
-      credentials: 'include'
-    }).then(function (resp) { return resp.text() })
-      .then(function (data) {
-        if (data == "Connection refused") {
-          alert("Vous identifiants ne sont pas corrects");
-          this.setCharging();
-        }
-        else if (data == "OK") {
-          this.props.dispatch({ type: 'CONNECT' });
-          this.props.dispatch({ type: 'SETUSER', value: this.state.email });
-          this.forward();
-        } else {
-          alert("Echec de connexion a nos services. Veuillez essayer ulterieurement");
-          this.setCharging();
-        }
-
-      }.bind(this))
-      .catch(function (error) {
-        alert(error);
-      });
-=======
 		this.setCharging();
 		fetch(path+'/TraitConnexion.php?email='+this.state.email+'&password='+this.state.password, {
           method: 'GET',
@@ -145,7 +117,6 @@ class SignIn extends React.Component {
 			.catch(function(error) {
 				alert(error);
 			}); 
->>>>>>> 933ffccafee8b88f693f9ab7658ed8ac52c710c3
   };
 
 
