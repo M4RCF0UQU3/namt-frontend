@@ -75,6 +75,7 @@ class Messagerie extends React.Component {
 	  this.loadMessages = this.loadMessages.bind(this);
 	  this.getProfilePhoto = this.getProfilePhoto.bind(this);
 	  this.linkbyUser = this.linkbyUser.bind(this);
+	  this.getGardenerNumbers = this.getGardenerNumbers.bind(this);
 	}
     state = {
 		value: 0,
@@ -113,6 +114,29 @@ class Messagerie extends React.Component {
 		alert(error);
 	}); 
   }
+  
+  getGardenerNumbers(){
+	fetch(path+'/getNombreJardiniersParJardin.php', {credentials: 'include', method: 'get', accept: 'application/json'})
+		.then(function(resp){return resp.json()})
+		.then(function(data) {
+			
+			if(data.info!="notconnected"){
+				for (let x of data){
+					this.setState(prevState => ({
+						numberUsers: {
+							...prevState.numberUsers,
+							[x.id]: [x.nbre, x.nbrmax]
+						}
+					}))
+				}
+			}
+		
+	}.bind(this))
+	.catch(function(error) {
+		alert(error);
+	}); 
+  }
+  
   linkbyUser(user){
 	  for (name of state.avatars){
 		  if (name[0] == user)
@@ -154,6 +178,7 @@ class Messagerie extends React.Component {
 						this.setState({ demandesPourJardins: demandesPourmoi});
 						this.getProfilePhoto(msg.demandeur);						
 					}
+					this.getGardenerNumbers();
 					
 			}.bind(this))
 			.catch(function(error) {
@@ -164,7 +189,7 @@ class Messagerie extends React.Component {
 		const { value } = this.state;
 		const { classes } = this.props;
 		const avs = this.state.avatars;
-		
+		console.log(this.state.numberUsers[1]);
 		const mesdemandes = this.state.mesDemandes.map( message =>(
 			<Grid container spacing={24} alignItems="stretch">
 				<Grid item xs={12}>
@@ -204,7 +229,7 @@ class Messagerie extends React.Component {
 						<CardHeader
 						avatar={
 						  <Avatar src={jardin.icon}/>
-						} title={jardin.nom} subheader="5/6 Jardiniers actifs dans ce jardin" />
+						} title={jardin.nom} subheader={this.state.numberUsers[jardin.id]}/>
 						{jardin.demandes.map(demande =>(
 							<Card>
 							 <ExpansionPanel>
