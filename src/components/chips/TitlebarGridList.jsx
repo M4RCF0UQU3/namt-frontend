@@ -7,6 +7,9 @@ import IconButton from 'material-ui/IconButton';
 import InfoIcon from 'material-ui-icons/Info';
 import image from '../../../public/images/backEvent.jpg';
 
+var path = require('../../backendPath.js').backendpath
+
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -59,8 +62,35 @@ const tileData = [
 
 ];
 
+function getInformationsUsers(){
+
+		fetch('http://mass-cara2.univ-tlse2.fr/~marc.fouque/namt-backend/getEvents.php', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json'
+          },
+          credentials: 'include'
+        }).then(function(resp){return resp.text()})
+				.then(function(data) {
+				if(data=="Connection refused"){
+					alert("Vous identifiants ne sont pas corrects");
+				}
+				else if (data=="OK"){
+					console.log('ok at this time !! ')
+				} else {
+					alert("Echec de connexion a nos services. Veuillez essayer ulterieurement");
+				}
+				
+			}.bind(this))
+			.catch(function(error) {
+				alert(error);
+			});
+
+}
+
 function TitlebarGridList(props) {
   const { classes } = props;
+  getInformationsUsers(); 
 
   return (
     <div className={classes.root}>
