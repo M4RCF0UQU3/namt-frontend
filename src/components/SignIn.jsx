@@ -11,7 +11,7 @@ import Divider from 'material-ui/Divider';
 import Toolbar from 'material-ui/Toolbar';
 import Grid from 'material-ui/Grid';
 import { green, red } from 'material-ui/colors';
-import {withRouter} from 'react-router';
+import {withRouter} from 'react-router-dom';
 import { CircularProgress } from 'material-ui/Progress';
 
 import { connect } from 'react-redux';
@@ -76,7 +76,8 @@ class SignIn extends React.Component{
 	  this.setCharging = this.setCharging.bind(this);
   };
   forward() {
-      this.props.history.push('/acceuilUser');      
+      console.log("AFFICHAGE :::: "); 
+      this.props.history.push('/accueilUser');    
   }
 	
   handleChange = prop => event => {

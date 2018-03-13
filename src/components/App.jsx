@@ -13,7 +13,7 @@ import Events from "../scenes/Events";
 import SignScreen from "../scenes/SignScreen";
 import ProfilUserPublic from "../scenes/ProfilUserPublic";
 import SearchGarden from "../scenes/Users/SearchGarden";
-import ProfilUserPrivate from "../scenes/Users/Home"
+import ProfilUserPrivate from "../scenes/ProfilUserPrivate"
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import Messagerie from "../scenes/Messagerie";

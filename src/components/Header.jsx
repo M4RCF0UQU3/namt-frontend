@@ -165,14 +165,7 @@ class Header extends React.Component {
                   </ListItem>
                 </Link>
 
-                <Link to="/accueilUser" style={styles.lien}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <EventIcon />
-                    </ListItemIcon>
-                    <ListItemText inset primary="Accueil" />
-                  </ListItem>
-                </Link>
+                
 
               </List>
             </div>
