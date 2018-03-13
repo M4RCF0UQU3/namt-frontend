@@ -18,7 +18,7 @@ import Avatar from 'material-ui/Avatar';
 import MenuAccount from './menus/MenuAccount.jsx';
 
 import { connect } from 'react-redux';
-
+import {withRouter} from 'react-router';
 
 var path = require('../backendPath.js').backendpath
 
@@ -113,6 +113,7 @@ class Header extends React.Component {
 			if(data.Reponse=="Connexion inexistante" || data.Reponse=="Déconnexion Effectuer"){
 				this.setState({connected: false})
 				this.props.dispatch({ type: 'DISCONNECT' });
+				this.props.history.push('/');   
 			}
 	}.bind(this))
 	.catch(function(error) {
@@ -213,4 +214,4 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(Header));
+export default withRouter(withStyles(styles)(connect(mapStateToProps)(Header)));
