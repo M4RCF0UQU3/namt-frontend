@@ -15,7 +15,7 @@ class MapGarden extends React.Component {
 	
 	constructor(props) {
       super(props);
-      this.state = { markersData:[{"id":1,"proprio":"TomateMagic","adresse":"adresse",
+      this.state = { markersData:[{"id":2018,"proprio":"TomateMagic","adresse":"adresse",
 									"info":"info","description":"pas de description","photo":"images/jardin.jpg","icon":"images/tomatoMarker/tomatoMarker.png",
 									"geom":"01010000206A08000068791EDC9DCD4540E02D90A0F831F73F","nom":"nom",
 									"ville":"Toulouse","code":"31000","pseudo":"Admin","photoproprio":"\/images\/phoque.png","geoj":{"type":"Point","coordinates":[43.598712 ,1.401465]}}] ,
@@ -40,11 +40,7 @@ class MapGarden extends React.Component {
     this.setState({ [prop]: event.target.value });
   };
   handleSubmit() {
-		this.setState({markersData:[{"id":9302,"proprio":"TomateMagic","adresse":"adresse",
-									"info":"info","description":"pas de description","photo":"images/jardin.jpg","icon":"images/tomatoMarker/tomatoMarker.png",
-									"geom":"01010000206A08000068791EDC9DCD4540E02D90A0F831F73F","nom":"nom",
-									"ville":"Toulouse","code":"31000","pseudo":"Admin","photoproprio":"\/images\/phoque.png","geoj":{"type":"Point","coordinates":[43.598712 ,1.401465]}}] 
-				})
+		
 		var requaeton;
 		requaeton='?s='+this.state.rec;
 

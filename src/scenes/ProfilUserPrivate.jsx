@@ -5,7 +5,10 @@ import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import InfoIcon from 'material-ui-icons/Info';
-import image from '../../../public/images/backEvent.jpg';
+import image from '../../public/images/backEvent.jpg';
+
+var path = require('../backendPath').backendpath
+
 
 const styles = theme => ({
   root: {
@@ -59,8 +62,58 @@ const tileData = [
 
 ];
 
-function TitlebarGridList(props) {
+
+function getInformationsUsers(monEmail) {
+
+  fetch(path+'/getEvents.php?email='+monEmail, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json'
+    },
+    credentials: 'include'
+  }).then(function (resp) { return resp.text() })
+    .then(function (data) {
+      if (data == "Connection refused") {
+        alert("Vous identifiants ne sont pas corrects");
+      }
+      else if (data == "OK") {
+        console.log('ok at this time !! ')
+      } else {
+        alert("Echec de connexion a nos services. Veuillez essayer ulterieurement Pleaseeeeeee");
+      }
+
+    }.bind(this))
+    .catch(function (error) {
+      alert(error);
+    });
+
+}
+
+
+
+function checkLogin() {
+  console.log("check login...Momo");
+  fetch(path+'/getInfoConnected.php', { credentials: 'include', method: 'get', accept: 'application/json' })
+    .then(function (resp) { return resp.json() })
+    .then(function (data) {
+      if (data.Reponse != "Veillez vous connecte") {
+        console.log("connection OK")
+        console.log(data.info[0].nom);
+        getInformationsUsers(data.info[0].email);
+      } else {
+        console.log("NOT CONNECTED");
+      }
+    }.bind(this))
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+
+function ProfilUserPrivate(props) {
   const { classes } = props;
+  console.log("Not fetching at this time why ?")
+  checkLogin();
 
   return (
     <div className={classes.root}>
@@ -87,8 +140,8 @@ function TitlebarGridList(props) {
   );
 }
 
-TitlebarGridList.propTypes = {
+ProfilUserPrivate.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TitlebarGridList);
+export default withStyles(styles)(ProfilUserPrivate);

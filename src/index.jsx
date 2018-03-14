@@ -41,6 +41,7 @@ function reducer(state = initialState, action) {
         user: action.value
       });
 	case 'SETPHOTO':
+	console.log("SETPHOTO:" +action.value);
       return Object.assign({}, state, {
         photo: action.value
       });
@@ -53,6 +54,7 @@ function reducer(state = initialState, action) {
         nom: action.value
       });
 	case 'SETPRENOM':
+		console.log("SETPRENOM:" +action.value);
       return Object.assign({}, state, {
         prenom: action.value
       });

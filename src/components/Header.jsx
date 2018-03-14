@@ -18,7 +18,7 @@ import Avatar from 'material-ui/Avatar';
 import MenuAccount from './menus/MenuAccount.jsx';
 
 import { connect } from 'react-redux';
-
+import {withRouter} from 'react-router';
 
 var path = require('../backendPath.js').backendpath
 
@@ -75,7 +75,6 @@ class Header extends React.Component {
 				this.setState({photoLink: data.photo});
 				this.props.dispatch({ type: 'SETPHOTO', value: data.photo});
 			}
-		
 	}.bind(this))
 	.catch(function(error) {
 		alert(error);
@@ -88,12 +87,14 @@ class Header extends React.Component {
 		.then(function(resp){return resp.json()})
 		.then(function(data) {
 			if(data.Reponse!="Veillez vous connecte"){
+				console.log(data.info[0]);
 				this.setState({connected: true})
 				this.props.dispatch({ type: 'CONNECT' });
 				this.props.dispatch({ type: 'SETPHOTO', value: data.info[0].photo});
 				this.props.dispatch({ type: 'SETDESCRIPTION', value: data.info[0].description});
 				this.props.dispatch({ type: 'SETNOM', value: data.info[0].nom});
 				this.props.dispatch({ type: 'SETPRENOM', value: data.info[0].prenom});
+				this.setState({photoLink: data.info[0].photo});
 				console.log(this.props);
 			} else {
 				console.log("NOT CONNECTED");
@@ -112,6 +113,7 @@ class Header extends React.Component {
 			if(data.Reponse=="Connexion inexistante" || data.Reponse=="Déconnexion Effectuer"){
 				this.setState({connected: false})
 				this.props.dispatch({ type: 'DISCONNECT' });
+				this.props.history.push('/');   
 			}
 	}.bind(this))
 	.catch(function(error) {
@@ -163,7 +165,6 @@ class Header extends React.Component {
                     <ListItemText inset primary="Chercher Jardin" />
                   </ListItem>
                 </Link>
-
                 <Link to="/accueilUser" style={styles.lien}>
                   <ListItem button>
                     <ListItemIcon>
@@ -172,7 +173,6 @@ class Header extends React.Component {
                     <ListItemText inset primary="Accueil" />
                   </ListItem>
                 </Link> 
-				 
               </List>
             </div>
           </div>
@@ -219,4 +219,4 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(Header));
+export default withRouter(withStyles(styles)(connect(mapStateToProps)(Header)));
