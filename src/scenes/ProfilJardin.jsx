@@ -99,18 +99,24 @@ class ProfilUserPublic extends React.Component{
 	  this.getProfileInformation = this.getProfileInformation.bind(this);
 	  this.getGardenerNumbers = this.getGardenerNumbers.bind(this);
 	  this.getEvaluations = this.getEvaluations.bind(this);
+	  this.sendMessage = this.sendMessage.bind(this);
   }
   state = {
 	"nombreJardiniers":0,	
 	"evaluation": [null, null],
-	"evaluationLoaded": false
+	"evaluationLoaded": false,
+	"dialogOpen": false,
+	"id": -1,
+	"message":"",
+	"sujet":"",
   };
   componentDidMount() {
-	  // if (typeof this.props.location.id === 'undefined'){
-		// alert("oups...un petit problème est apparu. Retour au page d'acceuil");
-		// this.props.history.push("/");
-	  // }
-	  this.getProfileInformation(3);
+	  if (typeof this.props.location.id === 'undefined'){
+		 alert("oups...un petit problème est apparu. Retour au page d'acceuil");
+		this.props.history.push("/");
+	  }
+	  this.getProfileInformation(this.props.location.id);
+	  this.setState({"id":this.props.location.id});
 	  
   }
   getProfileInformation(id){
@@ -122,7 +128,6 @@ class ProfilUserPublic extends React.Component{
           credentials: 'include'
         }).then(function(resp){return resp.json()})
 			.then(function(data) {
-
 				this.setState(data[0]);
 				this.getGardenerNumbers(id);
 				this.getEvaluations(id);
@@ -164,8 +169,42 @@ class ProfilUserPublic extends React.Component{
 		alert(error);
 	}); 
   }
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
 
-
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+  handleChange = event => {
+    this.setState({ message: event.target.value });
+  };
+  handleSubChange = event => {
+    this.setState({ sujet: event.target.value });
+  };
+  sendMessage(){
+	  if(this.state.message=='' || this.state.sujet==''){
+		  alert("S'il vous plait ca sert a rien de pas mettre un sujet ou un message!");		  
+	  } else {
+		this.handleClose();
+		  let formData  = new FormData();
+		  console.log("forming");
+		  console.log(this.state.id);
+		  formData.append("jardin", this.state.id);
+		  formData.append("message", this.state.message);
+		  formData.append("sujet", this.state.sujet);
+		  fetch(path+'/sendMessage.php', {method: 'post', body: formData, credentials: 'include'})
+			.then(function(resp){return resp.json()})
+			.then(function(data) {	
+					console.log(data);
+					alert(data.Reponse);
+			}.bind(this))
+			.catch(function(error) {
+				alert(error);
+			}); 
+	  }
+  };
+  
   render(){
     const { classes } = this.props;
     const photo = this.state.photo;	
@@ -224,7 +263,42 @@ class ProfilUserPublic extends React.Component{
               <Typography type="title" component="h3">
 				Note: {this.state.moyenne} / 5
               </Typography><br/>	<br/>	
-			<Button dense onClick={() => console.log(this.props.location.id)} className={classes.button} >Composer une demande</Button>
+			<Button dense onClick={this.handleClickOpen}className={classes.button} >Composer une demande</Button>
+			<Dialog
+			  open={this.state.open}
+			  onClose={this.handleClose}
+			  aria-labelledby="form-dialog-title"
+			>
+			  <DialogTitle id="form-dialog-title">Demande de Jardinage à {this.state.userfirstname} {this.state.userfirstname} pour le jardin {this.state.gardenname}</DialogTitle>
+			  <DialogContent>
+				<TextField
+				  autoFocus
+				  margin="dense"
+				  placeholder="Sujet"
+				  type="email"
+				  fullWidth
+				  value={this.state.sujet} 
+				  onChange={this.handleSubChange}
+				/>
+				<TextField
+				  margin="dense"
+				  placeholder="Mon Message"
+				  type="email"
+				  fullWidth
+				  multiline="true"
+				  value={this.state.message} 
+				  onChange={this.handleChange}
+				/>
+			  </DialogContent>
+			  <DialogActions>
+				<Button onClick={this.handleClose} color="primary">
+				  Annuler
+				</Button>
+				<Button onClick={this.sendMessage} color="primary">
+				  Envoyer
+				</Button>
+			  </DialogActions>
+			</Dialog>
             </Grid>
           </Grid>
         </Paper>
