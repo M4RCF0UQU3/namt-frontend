@@ -49,7 +49,7 @@ class App extends Component {
             <Route exact path='/accueilUser' component={ProfilUserPrivate}/>
             <Route exact path='/messagerie' component={Messagerie}/>
             <Route exact path='/nonAlaFusion' component={CreateGarden}/>
-			<Route exact path='/profilJardin' component={ProfilJardin}/>
+            <Route exact path='/profilJardin' component={ProfilJardin}/>
           </div>
           <Footer/>
         </div>
