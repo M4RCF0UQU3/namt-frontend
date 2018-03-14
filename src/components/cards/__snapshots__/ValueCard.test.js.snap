@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LanderCard correctly 1`] = `
+<div
+  className="MuiPaper-root-6 MuiPaper-shadow2-10 MuiPaper-rounded-7"
+  style={
+    Object {
+      "margin": "auto 10px",
+      "marginBottom": "20px",
+      "minHeight": "400px",
+    }
+  }
+>
+  <div
+    className="MuiCardMedia-root-33"
+    src={undefined}
+    style={
+      Object {
+        "backgroundImage": "url(images/gaertner.jpeg)",
+      }
+    }
+    title="Présentation"
+  />
+  <div
+    className="MuiCardContent-root-35"
+  >
+    <h3
+      className="MuiTypography-root-36 MuiTypography-headline-41"
+    >
+      Nos Valeurs
+    </h3>
+    <p
+      className="MuiTypography-root-36 MuiTypography-body1-45"
+    >
+      Collaboratif / ensemble
+    </p>
+    <p
+      className="MuiTypography-root-36 MuiTypography-body1-45"
+    >
+      Lien intergénérationnel et social
+    </p>
+  </div>
+</div>
+`;

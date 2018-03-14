@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LanderCard correctly 1`] = `
+<div
+  className="MuiPaper-root-6 MuiPaper-shadow2-10 MuiPaper-rounded-7"
+  style={
+    Object {
+      "margin": "auto 10px",
+      "marginBottom": "20px",
+      "minHeight": "400px",
+    }
+  }
+>
+  <div
+    className="MuiCardMedia-root-33"
+    src={undefined}
+    style={
+      Object {
+        "backgroundImage": "url(/images/plage.jpeg)",
+      }
+    }
+    title="Blog"
+  />
+  <div
+    className="MuiCardContent-root-35"
+  >
+    <h3
+      className="MuiTypography-root-36 MuiTypography-headline-41"
+    >
+      Offrir une belle plage !
+    </h3>
+    <p
+      className="MuiTypography-root-36 MuiTypography-body1-45"
+    >
+      Inscrire un jardin.
+    </p>
+  </div>
+  <div
+    className="MuiCardActions-root-60"
+  >
+    <div
+      className="MuiCardActions-action-61"
+    />
+    <a
+      className="MuiButtonBase-root-78 MuiButton-root-62 MuiCardActions-action-61"
+      href="https://docs.google.com/forms/d/e/1FAIpQLScARUhLXGZmND_pBvti02oi_sZvJce35jnfejglIAY4FHxxSQ/viewform"
+      label="Remplir le formulaire"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      target="_blank"
+    >
+      <span
+        className="MuiButton-label-64"
+      >
+        Inscrire Jardin (être inscrit)
+      </span>
+      <span
+        className="MuiTouchRipple-root-80"
+      />
+    </a>
+  </div>
+</div>
+`;
