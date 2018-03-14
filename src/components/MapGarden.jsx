@@ -7,7 +7,7 @@ import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 //import SearchBar from 'C:/Users/Marc/namt-frontend/src/components/tools/SearchBar.jsx';
 import TextField from 'material-ui/TextField';
-
+import {withRouter} from 'react-router';
 var curly='http://mass-cara2.univ-tlse2.fr/~marc.fouque';
 
 
@@ -175,7 +175,7 @@ class MapGarden extends React.Component {
 								this.state.markersData.map((m, idx) => 
 							 <Marker key={`marker-${idx}`} position={m['geoj']['coordinates']} icon={Leaflet.icon({iconUrl: m['icon'],iconSize:     [60, 60],iconAnchor:   [10, 50],popupAnchor:  [-3, -76],})}>
 								  <Popup>
-									<span>{m['nom']}<br/> Jardin de {m['pseudo']}<br/> {m['description']}</span>
+									<span>{m['nom']}<br/> Jardin de {m['pseudo']}<br/> {m['description']}<br/><Button onClick={()=>this.props.history.push({pathname: '/profilJardin',id: m.id})}>Profil</Button></span>
 								  </Popup>
 								</Marker>
 							 )}
@@ -195,4 +195,4 @@ class MapGarden extends React.Component {
 }
 
 
-export default (MapGarden);
+export default withRouter(MapGarden);

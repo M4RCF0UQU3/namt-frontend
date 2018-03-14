@@ -18,6 +18,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import Messagerie from "../scenes/Messagerie";
 import CreateGarden from "../scenes/CreateGarden";
+import ProfilJardin from "../scenes/ProfilJardin";
 
 
 const styles = {
@@ -48,6 +49,7 @@ class App extends Component {
             <Route exact path='/accueilUser' component={ProfilUserPrivate}/>
             <Route exact path='/messagerie' component={Messagerie}/>
             <Route exact path='/nonAlaFusion' component={CreateGarden}/>
+			<Route exact path='/profilJardin' component={ProfilJardin}/>
           </div>
           <Footer/>
         </div>
