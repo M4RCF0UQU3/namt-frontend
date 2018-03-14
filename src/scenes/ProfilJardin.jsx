@@ -11,6 +11,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import { SocialIcon } from 'react-social-icons';
@@ -23,13 +24,16 @@ import {
   GridListTile, 
   GridListTileBar
 } from 'material-ui/GridList';
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import InfoIcon from 'material-ui-icons/Info';
-import ListLanderOwner from '../components/ListLanderOwner.jsx';
-import ListLanderExploit from '../components/ListLanderExploit.jsx';
+import List, { ListItem, ListItemText } from 'material-ui/List';
 {/*import Test from '../components/Test.jsx';*/}
 import {withRouter} from 'react-router';
 import { connect } from 'react-redux';
+
+
 var path = require('../backendPath.js').backendpath
+
 const styles = {
   media: {
     height: '30vh',
@@ -40,6 +44,9 @@ const styles = {
 
   flexGrow: {
     flex: '1 1 auto',
+  },
+  button: {
+	backgroundColor: 'red'
   },
 
   indication: {
@@ -62,7 +69,9 @@ const styles = {
     width: 4,
     height: 4,
   },
-
+  tests: {
+	  backgroundColor: 'red'
+  },
   row: {
     display: 'flex',
     justifyContent: 'center',
@@ -87,31 +96,73 @@ const styles = {
 class ProfilUserPublic extends React.Component{
   constructor(props) {
       super(props);
-	  this.getProfilePhoto = this.getProfilePhoto.bind(this);
+	  this.getProfileInformation = this.getProfileInformation.bind(this);
+	  this.getGardenerNumbers = this.getGardenerNumbers.bind(this);
+	  this.getEvaluations = this.getEvaluations.bind(this);
+  }
+  state = {
+	"nombreJardiniers":0,	
+	"evaluation": [null, null],
+	"evaluationLoaded": false
+  };
+  componentDidMount() {
+	  // if (typeof this.props.location.id === 'undefined'){
+		// alert("oups...un petit problème est apparu. Retour au page d'acceuil");
+		// this.props.history.push("/");
+	  // }
+	  this.getProfileInformation(3);
+	  
+  }
+  getProfileInformation(id){
+	fetch(path+'/getSingleGarden.php?id='+id, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json'
+          },
+          credentials: 'include'
+        }).then(function(resp){return resp.json()})
+			.then(function(data) {
+
+				this.setState(data[0]);
+				this.getGardenerNumbers(id);
+				this.getEvaluations(id);
+			}.bind(this))
+			.catch(function(error) {
+				alert(error);
+			}); 
+  }
+  getEvaluations(id){
+	  fetch(path+'/getGardenEvaluations.php?id='+id, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json'
+          },
+          credentials: 'include'
+        }).then(function(resp){return resp.json()})
+			.then(function(data) {
+				this.setState(data);
+				
+				this.setState({evaluationLoaded: true});
+				console.log(this.state);
+			}.bind(this))
+			.catch(function(error) {
+				alert(error);
+			}); 
   }
   
-  state = {
-		photo: '',			//profile image
-		accountType: 'user',	//profile type
-		user: '',
-		connected: false
-	};
-  
-  getProfilePhoto(email){
-	fetch(path+'/getPhoto.php?email='+email, {credentials: 'include', method: 'get', accept: 'application/json'})
+  getGardenerNumbers(id){
+	fetch(path+'/getNombreJardiniersParJardin.php?id='+id, {credentials: 'include', method: 'get', accept: 'application/json'})
 		.then(function(resp){return resp.json()})
-		.then(function(data) {
-			if(data.info!="notconnected")
-				this.setState({photoLink: data.photo});
+		.then(function(data) {	
+			if(data.info!="notconnected"){
+				this.setState({"nombreJardiniers":data.nbre});
+				console.log(data.nbre);
+			}
 		
 	}.bind(this))
 	.catch(function(error) {
 		alert(error);
 	}); 
-  }
-  componentDidMount() {
-	  console.log("disconnect dispatched");
-	  this.props.dispatch({ type: 'DISCONNECT' });
   }
 
 
@@ -119,55 +170,64 @@ class ProfilUserPublic extends React.Component{
     const { classes } = this.props;
     const photo = this.state.photo;	
     return(
-      <div>
-        <Card className={classes.card}>
+        <Paper>
           <Grid container spacing={16} alignItems="stretch">
-            <Grid item xs={12}>
-              <CardMedia
-                className={classes.media}
-                image={photo}
-                title=""
-              />
-              <CardContent>
-                <Avatar alt="Chat" src={this.props.photo} className={classes.bigAvatar} />
-                <Typography type="headline" component="h3">
-                  Michel
-                </Typography>
-                <Typography component="p">
-                  petite phrase d'accroche
-                </Typography>
-              </CardContent>
-			  <Button onClick={() => console.log(this.props.location.id)}>touch me </Button>
+            <Grid item xs={6}>
+              <Typography type="headline" component="h1">
+			  {this.state.gardenname}
+              </Typography>			
+			  <Typography>
+				{this.state.gardeninfo}
+              </Typography>	
+			  <Table>
+					<TableBody>
+						<TableRow>
+							<TableCell>Proprietaire</TableCell>
+							<TableCell>{this.state.userfirstname} {this.state.username}</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell>Adresse</TableCell>
+							<TableCell>{this.state.gardenaddress}, {this.state.city}</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell>Surface</TableCell>
+							<TableCell>{this.state.surface} m²</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell>Nombre de jardiniers</TableCell>
+							<TableCell>{this.state.nombreJardiniers} sur {this.state.gardenmaxgardeners}</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell>Déscription</TableCell>
+							<TableCell>{this.state.gardendescription}</TableCell>
+						</TableRow>
+					</TableBody>
+			  </Table>
             </Grid>
               
-            <Grid item xs={12}>
-
-              <Typography type="headline" component="h3">
-                Propriétaire des jardins suivants :
-              </Typography>
-              <ListLanderOwner/>
-
+            <Grid item xs={6}>
+				<img src={this.state.gardenphoto} width="90%" />
             </Grid>
 
-            <Grid item xs={12}>
-
-              <Typography type="headline" component="h3">
-                Exploite les jardins suivants :
-              </Typography>
-              <ListLanderExploit/>
-
+            <Grid item xs={6}>
+				<Typography type="title" component="h3">Commentaires</Typography>
+				{this.state.evaluationLoaded?(this.state.evaluation.map(comment => (
+						<ListItem>
+						  <Avatar src={comment.icon}/>
+					<ListItemText primary={comment.note+"/5"} secondary={comment.commentaire} />
+						</ListItem>	
+					))):""}
             </Grid>  
-
-            <Grid item xs={12}>
-
-              <Typography type="headline" component="h3">
-                Évaluations 
-              </Typography>
-     
+				
+            <Grid item xs={6}>
+				
+              <Typography type="title" component="h3">
+				Note: {this.state.moyenne} / 5
+              </Typography><br/>	<br/>	
+			<Button dense onClick={() => console.log(this.props.location.id)} className={classes.button} >Composer une demande</Button>
             </Grid>
           </Grid>
-        </Card>
-      </div>
+        </Paper>
     );
   }
 }
