@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventsCard correctly 1`] = `
+<div>
+  <div
+    className="MuiPaper-root-1 MuiPaper-shadow2-5 MuiPaper-rounded-2"
+  >
+    <div
+      className="MuiCardMedia-root-28"
+      src={undefined}
+      style={
+        Object {
+          "backgroundImage": "url(/images/bille.jpg)",
+        }
+      }
+      title="Présentation"
+    />
+    <div
+      className="MuiCardContent-root-30"
+    >
+      <h2
+        className="MuiTypography-root-31 MuiTypography-headline-36"
+      >
+        Abandonne ta Tomate...
+      </h2>
+      <p
+        className="MuiTypography-root-31 MuiTypography-body1-40"
+      >
+        Vu qu'on a été viré, nous faisons de la concurrence !
+      </p>
+    </div>
+    <div
+      className="MuiCardActions-root-55"
+    >
+      <div />
+      <button
+        className="MuiButtonBase-root-73 MuiButton-root-57"
+        disabled={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        role={undefined}
+        tabIndex={0}
+        type="button"
+      >
+        <span
+          className="MuiButton-label-59"
+        >
+          C'est le newletter
+        </span>
+        <span
+          className="MuiTouchRipple-root-75"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;

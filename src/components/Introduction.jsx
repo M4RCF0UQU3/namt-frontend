@@ -192,9 +192,6 @@ class Introduction extends React.Component{
             <Typography component="p">
               Vu qu'on a été viré, nous faisons de la concurrence !
             </Typography>
-            <Typography component="p">
-              Cet élément n'est pas une card c'est dans introduction.jsx
-            </Typography>
           </CardContent>
           <CardActions disableActionSpacing>
 
