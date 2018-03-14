@@ -18,7 +18,6 @@ import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 import ShareIcon from 'material-ui-icons/Share';
 import Button from 'material-ui/Button';
-import MarcCard from '../../components/cards/MarcCard.jsx';
 
 
 const styles = theme => ({
@@ -125,7 +124,6 @@ class SearchGarden extends React.Component {
     return (
       <div className={classes.root}>
 		<Grid container alignItems="stretch">
-					<MarcCard/>
 					<MapGarden />
 			</Grid>
         <Grid container spacing={16} alignItems="stretch">

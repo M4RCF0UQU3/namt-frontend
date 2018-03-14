@@ -171,8 +171,8 @@ class Header extends React.Component {
                     </ListItemIcon>
                     <ListItemText inset primary="Accueil" />
                   </ListItem>
-                </Link>
-
+                </Link> 
+				 
               </List>
             </div>
           </div>

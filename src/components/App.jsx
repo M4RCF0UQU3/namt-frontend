@@ -17,6 +17,8 @@ import ProfilUserPrivate from "../scenes/Users/Home"
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import Messagerie from "../scenes/Messagerie";
+import CreateGarden from "../scenes/CreateGarden";
+
 
 const styles = {
   container: {
@@ -45,6 +47,7 @@ class App extends Component {
             <Route  path='/search_garden' component={SearchGarden}/>
             <Route exact path='/accueilUser' component={ProfilUserPrivate}/>
             <Route exact path='/messagerie' component={Messagerie}/>
+            <Route exact path='/nonAlaFusion' component={CreateGarden}/>
           </div>
           <Footer/>
         </div>

@@ -76,7 +76,7 @@ class MenuListComposition extends React.Component {
               <Grow in={open} id="menu-list" style={{ transformOrigin: '0 0 0' }}>
                 <Paper>
                   <MenuList role="menu">
-                    <MenuItem onClick={() => this.goTo("")}> 
+                    <MenuItem onClick={() => this.goTo("nonAlaFusion")}> 
 						<ListItemIcon className={classes.icon}>
 							<RoomIcon />
 						</ListItemIcon>
