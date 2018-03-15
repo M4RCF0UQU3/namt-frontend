@@ -87,7 +87,7 @@ class MenuListComposition extends React.Component {
 					  </ListItemIcon>
 					  <ListItemText className={classes.listText} primary="Recherche Jardin" />
 					</MenuItem>
-                    <MenuItem onClick={() => this.goTo("")}><ListItemIcon className={classes.icon}>
+                    <MenuItem onClick={() => this.goTo("my_gardens")}><ListItemIcon className={classes.icon}>
 						<DashboardIcon />
 					  </ListItemIcon>
 					  <ListItemText className={classes.listText} primary="Mes Jardins" />

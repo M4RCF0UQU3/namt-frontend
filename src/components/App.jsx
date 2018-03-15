@@ -19,7 +19,7 @@ import { createStore } from 'redux';
 import Messagerie from "../scenes/Messagerie";
 import CreateGarden from "../scenes/CreateGarden";
 import ProfilJardin from "../scenes/ProfilJardin";
-
+import MesJardins from "../scenes/MesJardins";
 
 const styles = {
   container: {
@@ -50,6 +50,7 @@ class App extends Component {
             <Route exact path='/messagerie' component={Messagerie}/>
             <Route exact path='/nonAlaFusion' component={CreateGarden}/>
             <Route exact path='/profilJardin' component={ProfilJardin}/>
+			<Route exact path='/my_gardens' component={MesJardins}/>
           </div>
           <Footer/>
         </div>
