@@ -8,8 +8,11 @@ import Button from 'material-ui/Button';
 //import SearchBar from 'C:/Users/Marc/namt-frontend/src/components/tools/SearchBar.jsx';
 import TextField from 'material-ui/TextField';
 import {withRouter} from 'react-router';
-var curly='http://mass-cara2.univ-tlse2.fr/~marc.fouque';
 
+var path = require('../backendPath.js').backendpath
+var curly = path;
+var path = require('../backendPath.js').backendpath
+var imagepath = require('../backendPath.js').imagepath
 
 class MapGarden extends React.Component {
 	
@@ -44,7 +47,7 @@ class MapGarden extends React.Component {
 		var requaeton;
 		requaeton='?s='+this.state.rec;
 
-	  	fetch(curly+'/namt-backend/filtreJardin.php'+requaeton, {
+	  	fetch(curly+'/filtreJardin.php'+requaeton, {
 				method: 'get'}, {mode: 'cors'}
 				)
 				.then(function(resp){return resp.json()})
@@ -99,7 +102,7 @@ class MapGarden extends React.Component {
     const toulouse = [43.604652 , 1.444209];
 	const p=[[43.578689 ,1.401336],[43.58 ,1.401336],[43.579 ,1.402],[43.59 ,1.42]];
 	const greenIcon = Leaflet.icon({
-								iconUrl: '/images/tomatogif.gif',
+								iconUrl: imagepath+'/images/tomatogif.gif',
 								iconSize:     [60, 60],
 								iconAnchor:   [10, 50],
 								popupAnchor:  [-3, -76],
@@ -173,7 +176,7 @@ class MapGarden extends React.Component {
 							/>
 							 {
 								this.state.markersData.map((m, idx) => 
-							 <Marker key={`marker-${idx}`} position={m['geoj']['coordinates']} icon={Leaflet.icon({iconUrl: m['icon'],iconSize:     [60, 60],iconAnchor:   [10, 50],popupAnchor:  [-3, -76],})}>
+							 <Marker key={`marker-${idx}`} position={m['geoj']['coordinates']} icon={Leaflet.icon({iconUrl: imagepath+"/"+m['icon'],iconSize:     [60, 60],iconAnchor:   [10, 50],popupAnchor:  [-3, -76],})}>
 								  <Popup>
 									<span>{m['nom']}<br/> Jardin de {m['pseudo']}<br/> {m['description']}<br/><Button onClick={()=>this.props.history.push({pathname: '/profilJardin',id: m.id})}>Profil</Button></span>
 								  </Popup>

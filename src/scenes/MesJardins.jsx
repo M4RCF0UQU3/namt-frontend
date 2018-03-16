@@ -31,7 +31,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import {withRouter} from 'react-router';
 import { connect } from 'react-redux';
 
-
+var imagepath = require('../backendPath.js').imagepath
 var path = require('../backendPath.js').backendpath
 
 const styles = {
@@ -135,7 +135,7 @@ class MesJardins extends React.Component{
 			  {this.state.data.map(jardin => (
 					<Grid item xs={6}>  
 					<Paper>
-						  <img src={jardin.photo} width="90%" height="300px"/>
+						  <img src={imagepath+"/"+jardin.photo} width="90%" height="300px"/>
 						  <Table>
 								<TableBody>
 									<TableRow>
@@ -148,7 +148,7 @@ class MesJardins extends React.Component{
 									</TableRow>
 									<TableRow>
 										<TableCell>Icon</TableCell>
-										<TableCell><Avatar src={jardin.icon} /></TableCell>
+										<TableCell><Avatar src={imagepath+"/"+jardin.icon} /></TableCell>
 									</TableRow>
 									<TableRow>
 										<TableCell>Surface</TableCell>

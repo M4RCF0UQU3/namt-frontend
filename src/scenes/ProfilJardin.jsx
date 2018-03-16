@@ -33,6 +33,7 @@ import { connect } from 'react-redux';
 
 
 var path = require('../backendPath.js').backendpath
+var imagepath = require('../backendPath.js').imagepath
 
 const styles = {
   media: {
@@ -245,14 +246,14 @@ class ProfilUserPublic extends React.Component{
             </Grid>
               
             <Grid item xs={6}>
-				<img src={this.state.gardenphoto} width="90%" />
+				<img src={imagepath+"/"+this.state.gardenphoto} width="90%" />
             </Grid>
 
             <Grid item xs={6}>
 				<Typography type="title" component="h3">Commentaires</Typography>
 				{this.state.evaluationLoaded?(this.state.evaluation.map(comment => (
 						<ListItem>
-						  <Avatar src={comment.icon}/>
+						  <Avatar src={imagepath+"/"+comment.icon}/>
 					<ListItemText primary={comment.note+"/5"} secondary={comment.commentaire} />
 						</ListItem>	
 					))):""}

@@ -6,6 +6,8 @@ import Typography from 'material-ui/Typography';
 import MainPageCard from './MainPageCard.jsx';
 import Button from 'material-ui/Button';
 
+var imagepath = require('../../backendPath.js').imagepath
+
 const styles = {
   media: {
     height: '200px',
@@ -23,7 +25,7 @@ function CustomCard(props) {
       <MainPageCard className={classes.card}>
         <CardMedia
           className={classes.media}
-          image="/images/aqueuse.jpg"
+          image={imagepath+"/images/aqueuse.jpg"}
           title="Blog"
         />
       <CardContent>

@@ -17,6 +17,8 @@ import { SocialIcon } from 'react-social-icons';
 import Snackbar from 'material-ui/Snackbar';
 import CloseIcon from 'material-ui-icons/Close';
 
+var imagepath = require('../backendPath.js').imagepath
+
 const styles = {
   card: {
     margin: 'auto 10px',
@@ -182,7 +184,7 @@ class Introduction extends React.Component{
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image="/images/bille.jpg"
+            image={imagepath+"/images/bille.jpg"}
             title="Présentation"
           />
           <CardContent>

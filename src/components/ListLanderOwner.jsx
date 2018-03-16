@@ -6,6 +6,8 @@ import IconButton from 'material-ui/IconButton';
 import StarBorderIcon from 'material-ui-icons/StarBorder';
 //import listeDesJardinsPossédés from './path';
 
+var imagepath = require('../backendPath.js').imagepath
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -64,8 +66,8 @@ class ListLanderOwner extends React.Component {
       <div className={classes.root}>
         <GridList className={classes.gridList}>
           {gardens.map(garden => (
-            <GridListTile key={garden.photo}>
-              <img src={garden.photo} alt={garden.nom} />
+            <GridListTile key={imagepath+garden.photo}>
+              <img src={imagepath+garden.photo} alt={garden.nom} />
               <GridListTileBar
                 title={garden.nom}
                 subtitle={<span>Propriétaire : {garden.proprio}</span>}

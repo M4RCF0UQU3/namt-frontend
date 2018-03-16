@@ -5,6 +5,8 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import MainPageCard from './MainPageCard.jsx';
 
+var imagepath = require('../../backendPath.js').imagepath
+
 const styles = {
   media: {
     height: '200px',
@@ -17,7 +19,7 @@ function ShowCard(props) {
       <MainPageCard className={classes.card}>
         <CardMedia
           className={classes.media}
-          image="images/gaertner.jpeg"
+          image={imagepath+"images/gaertner.jpeg"}
           title="Présentation"
         />
         <CardContent>

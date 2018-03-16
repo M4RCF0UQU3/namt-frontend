@@ -21,6 +21,7 @@ import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
 
 var path = require('../backendPath.js').backendpath
+var imagepath = require('../backendPath.js').imagepath
 
 const styles = {
   appbar: {
@@ -189,8 +190,8 @@ class Header extends React.Component {
               <MenuIcon />
           </IconButton>	
 		  
-          <Link to="/" style={styles.lien}><img src='/images/logo.png' style={styles.img}/></Link>
-			{this.state.connected?(this.state.photoLink==''?(<MenuAccount logout={this.tryLogout.bind(this)}><FaceIcon /></MenuAccount>):(<MenuAccount logout={this.tryLogout.bind(this)}><Avatar src={this.state.photoLink} /></MenuAccount>)):( 
+          <Link to="/" style={styles.lien}><img src={imagepath+'/images/logo.png'} style={styles.img}/></Link>
+			{this.state.connected?(this.state.photoLink==''?(<MenuAccount logout={this.tryLogout.bind(this)}><FaceIcon /></MenuAccount>):(<MenuAccount logout={this.tryLogout.bind(this)}><Avatar src={imagepath+this.state.photoLink} /></MenuAccount>)):( 
 			  <Button
 								component={Link}
 				  color="contrast"

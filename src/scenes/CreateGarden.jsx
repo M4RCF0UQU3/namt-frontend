@@ -49,7 +49,7 @@ import Introduction from '../components/Introduction.jsx';
 import TextField from 'material-ui/TextField';
 
 var path = require('../backendPath.js').backendpath
-
+var imagepath = require('../backendPath.js').imagepath
 
 const tomaticon = [
   'images/tomatoMarker/tomatoMarker.png',
@@ -294,7 +294,7 @@ class CreateGarden extends React.Component {
 								  onClick={event => this.handleMenuItemClick(event, index,option) }
 								>
 								<ListItemIcon>
-									<img src={option} alt="crap" style={{ height: 50,width:50}}/>
+									<img src={imagepath+'/'+option} alt="crap" style={{ height: 50,width:50}}/>
 								</ListItemIcon>
 								</MenuItem>
 							  ))}

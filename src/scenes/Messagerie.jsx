@@ -14,8 +14,9 @@ import classNames from 'classnames';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
 import MessagerieCard from '../components/cards/MessagerieCard.jsx';
-var path = require('../backendPath.js').backendpath
 
+var path = require('../backendPath.js').backendpath
+var imagepath = require('../backendPath.js').imagepath
 
 const styles = {
 	lien: {
@@ -195,7 +196,7 @@ class Messagerie extends React.Component {
 						<ExpansionPanelDetails className={classes.details}>
 						  
 						  <div className={classes.column}>
-							<Avatar src={this.state.avatars[message.demandeur]}/>
+							<Avatar src={imagepath+this.state.avatars[message.demandeur]}/>
 						  </div>
 						  <div className={classNames(classes.column2, classes.helper)}>
 							<Typography type="caption">
@@ -219,7 +220,7 @@ class Messagerie extends React.Component {
 					<Card>
 						<CardHeader
 						avatar={
-						  <Avatar src={jardin.icon}/>
+						  <Avatar src={imagepath+"/"+jardin.icon}/>
 						} title={jardin.nom} subheader={this.state.numberUsers[jardin.id]+" jardiniers"}/>
 						{jardin.demandes.map(demande =>(
 							<Card>
