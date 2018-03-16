@@ -233,7 +233,7 @@ class Messagerie extends React.Component {
 								<ExpansionPanelDetails className={classes.details}>
 								  
 								  <div className={classes.column}>
-									<Avatar src={this.state.avatars[demande.demandeur]}/>
+									<Avatar src={imagepath+"/"+this.state.avatars[demande.demandeur]}/>
 								  </div>
 								  <div className={classNames(classes.column2, classes.helper)}>
 									<Typography type="caption">
