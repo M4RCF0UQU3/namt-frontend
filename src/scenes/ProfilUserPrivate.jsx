@@ -28,7 +28,7 @@ const styles = theme => ({
 });
 
 
-const tileData = [
+var tileData = [
   {
     img: image,
     title: 'Evenement du 13/12/2018 12h23 ',
@@ -62,9 +62,13 @@ const tileData = [
 
 ];
 
+function getEmail(monEmail){
+  return monEmail; 
+}
+
 
 function getInformationsUsers(monEmail) {
-
+  var monjson;
   fetch(path+'/getEvents.php?email='+monEmail, {
     method: 'GET',
     headers: {
@@ -73,14 +77,17 @@ function getInformationsUsers(monEmail) {
     credentials: 'include'
   }).then(function (resp) { return resp.text() })
     .then(function (data) {
-      if (data == "Connection refused") {
-        alert("Vous identifiants ne sont pas corrects");
-      }
-      else if (data == "OK") {
-        console.log('ok at this time !! ')
+      if (data.Reponse != "Veillez vous connecte") {
+        console.log(data); 
+        monjson = JSON.parse(data);
+        return monjson;
+        //tileData.push({img:image,title:monjson[0].nom,author:monjson[0].organisateur});
+        //console.log(monjson[0].nom+" -- "+monjson[0].organisateur); 
       } else {
-        alert("Echec de connexion a nos services. Veuillez essayer ulterieurement Pleaseeeeeee");
+        console.log("NOT CONNECTED");
+        return "0";
       }
+      
 
     }.bind(this))
     .catch(function (error) {
@@ -89,23 +96,19 @@ function getInformationsUsers(monEmail) {
 
 }
 
-
-
-function checkLogin() {
-  console.log("check login...Momo");
-  fetch(path+'/getInfoConnected.php', { credentials: 'include', method: 'get', accept: 'application/json' })
+function checkLogin() {  
+  return fetch(path+'/getInfoConnected.php', { credentials: 'include', method: 'get', accept: 'application/json' })
     .then(function (resp) { return resp.json() })
     .then(function (data) {
-      if (data.Reponse != "Veillez vous connecte") {
-        console.log("connection OK")
-        console.log(data.info[0].nom);
-        getInformationsUsers(data.info[0].email);
-      } else {
-        console.log("NOT CONNECTED");
+      if (data.Reponse != "Veillez vous connecte") { 
+        console.log(data.info[0]);
+        return data.info[0];
+
       }
     }.bind(this))
     .catch(function (error) {
       console.log(error);
+      return 0; 
     });
 }
 
@@ -113,8 +116,13 @@ function checkLogin() {
 function ProfilUserPrivate(props) {
   const { classes } = props;
   console.log("Not fetching at this time why ?")
-  checkLogin();
-
+  var mypromise = checkLogin();
+  var emailz ; 
+  mypromise.then(leresulta => {emailz =  leresulta.email});
+  console.log(emailz);
+  
+  
+  
   return (
     <div className={classes.root}>
       <GridList cellHeight={100} className={classes.gridList}>
@@ -123,10 +131,10 @@ function ProfilUserPrivate(props) {
         </GridListTile>
         {tileData.map(tile => (
           <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+            <img src={tile.img} alt={tile.nom} />
             <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: {tile.author}</span>}
+              title={tile.nom}
+              subtitle={<span>by: {tile.organisateur}</span>}
               actionIcon={
                 <IconButton className={classes.icon}>
                   <InfoIcon />
