@@ -5,7 +5,13 @@ import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import InfoIcon from 'material-ui-icons/Info';
-import image from '../../public/images/backEvent.jpg';
+import image from '../../public/images/jardins.jpg';
+import image1 from '../../public/images/jardin.jpg';
+import image2 from '../../public/images/fleur.jpg';
+import image3 from '../../public/images/pommier.jpg';
+import image4 from '../../public/images/legume.jpeg';
+import image5 from '../../public/images/fruit.jpg';
+
 
 var path = require('../backendPath').backendpath
 
@@ -24,46 +30,50 @@ const styles = theme => ({
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
-  },
+  },  
 });
 
-
 var tileData = [
-  {
-    img: image,
-    title: 'Evenement du 13/12/2018 12h23 ',
-    author: 'Pablo Escobar',
+  { 
+    img : image,
+    nom : "Force de la Nature",
+    organisateur : "@dmin" 
   },
-  {
-    img: image,
-    title: 'Evenement du 13/12/2018 12h23 ',
-    author: 'Pablo Escobar',
+  { 
+    img : image1,
+    nom : "Retour de la Tomate",
+    organisateur : "@admin" 
   },
-  {
-    img: image,
-    title: 'Evenement du 13/12/2018 12h23 ',
-    author: 'Pablo Escobar',
+  { 
+    img : image2,
+    nom : "",
+    organisateur : "" 
   },
-  {
-    img: image,
-    title: 'Evenement du 13/12/2018 12h23 ',
-    author: 'Pablo Escobar',
+  { 
+    img : image3,
+    nom : "",
+    organisateur : "" 
   },
-  {
-    img: image,
-    title: 'Evenement du 13/12/2018 12h23 ',
-    author: 'Pablo Escobar',
+  { 
+    img : image4,
+    nom : "",
+    organisateur : "" 
   },
-  {
-    img: image,
-    title: 'Evenement du 13/12/2018 12h23 ',
-    author: 'Pablo Escobar',
-  },
+  { 
+    img : image5,
+    nom : "",
+    organisateur : "" 
+  }
+]
 
-];
-
-function getEmail(monEmail){
-  return monEmail; 
+function setData(monjson){
+  var i = 0; 
+  monjson.forEach(element => {
+    console.log(element);
+    tileData.push({img:image,nom:element.nom,organisateur:element.organisateur})
+    i++;
+    
+  });
 }
 
 
@@ -78,11 +88,8 @@ function getInformationsUsers(monEmail) {
   }).then(function (resp) { return resp.text() })
     .then(function (data) {
       if (data.Reponse != "Veillez vous connecte") {
-        console.log(data); 
-        monjson = JSON.parse(data);
-        return monjson;
-        //tileData.push({img:image,title:monjson[0].nom,author:monjson[0].organisateur});
-        //console.log(monjson[0].nom+" -- "+monjson[0].organisateur); 
+        monjson = JSON.parse(data)
+        setData(monjson)
       } else {
         console.log("NOT CONNECTED");
         return "0";
@@ -92,8 +99,7 @@ function getInformationsUsers(monEmail) {
     }.bind(this))
     .catch(function (error) {
       alert(error);
-    });
-
+    })
 }
 
 function checkLogin() {  
@@ -101,9 +107,7 @@ function checkLogin() {
     .then(function (resp) { return resp.json() })
     .then(function (data) {
       if (data.Reponse != "Veillez vous connecte") { 
-        console.log(data.info[0]);
-        return data.info[0];
-
+        return data.info[0]
       }
     }.bind(this))
     .catch(function (error) {
@@ -118,10 +122,10 @@ function ProfilUserPrivate(props) {
   console.log("Not fetching at this time why ?")
   var mypromise = checkLogin();
   var emailz ; 
-  mypromise.then(leresulta => {emailz =  leresulta.email});
-  console.log(emailz);
-  
-  
+  mypromise.then(leresulta => {emailz =  leresulta.email; getInformationsUsers(emailz);});
+  var realData = tileData; 
+  console.log(realData);
+
   
   return (
     <div className={classes.root}>
@@ -129,7 +133,7 @@ function ProfilUserPrivate(props) {
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <Subheader component="div">EVENEMENTS PREVUS</Subheader>
         </GridListTile>
-        {tileData.map(tile => (
+        {realData.map(tile => (
           <GridListTile key={tile.img}>
             <img src={tile.img} alt={tile.nom} />
             <GridListTileBar
