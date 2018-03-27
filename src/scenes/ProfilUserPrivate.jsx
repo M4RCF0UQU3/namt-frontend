@@ -5,16 +5,10 @@ import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import InfoIcon from 'material-ui-icons/Info';
-import image from '../../public/images/jardins.jpg';
-import image1 from '../../public/images/jardin.jpg';
-import image2 from '../../public/images/fleur.jpg';
-import image3 from '../../public/images/pommier.jpg';
-import image4 from '../../public/images/legume.jpeg';
-import image5 from '../../public/images/fruit.jpg';
 
 
-var path = require('../backendPath').backendpath
-
+var path = require('../backendPath').backendpath;
+var lesimages = require('./tileData').mesimage;
 
 const styles = theme => ({
   root: {
@@ -31,36 +25,37 @@ const styles = theme => ({
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },  
-});
+})
 
+console.log (lesimages.im0);
 var tileData = [
   { 
-    img : image,
+    img : lesimages.im0,
     nom : "Force de la Nature",
     organisateur : "@dmin" 
   },
   { 
-    img : image1,
+    img : lesimages.im1,
     nom : "Retour de la Tomate",
-    organisateur : "@admin" 
+    organisateur : "@dmin" 
   },
   { 
-    img : image2,
+    img : lesimages.im2,
     nom : "",
     organisateur : "" 
   },
   { 
-    img : image3,
+    img : lesimages.im3,
     nom : "",
     organisateur : "" 
   },
   { 
-    img : image4,
+    img : lesimages.im4,
     nom : "",
     organisateur : "" 
   },
   { 
-    img : image5,
+    img : lesimages.im5,
     nom : "",
     organisateur : "" 
   }
@@ -70,7 +65,7 @@ function setData(monjson){
   var i = 0; 
   monjson.forEach(element => {
     console.log(element);
-    tileData.push({img:image,nom:element.nom,organisateur:element.organisateur})
+    //tileData.push({img:null,nom:element.nom,organisateur:element.organisateur})
     i++;
     
   });
@@ -122,10 +117,7 @@ function ProfilUserPrivate(props) {
   console.log("Not fetching at this time why ?")
   var mypromise = checkLogin();
   var emailz ; 
-  mypromise.then(leresulta => {emailz =  leresulta.email; getInformationsUsers(emailz);});
-  var realData = tileData; 
-  console.log(realData);
-
+  mypromise.then(leresulta => {emailz =  leresulta.email; getInformationsUsers(emailz);})
   
   return (
     <div className={classes.root}>
@@ -133,7 +125,7 @@ function ProfilUserPrivate(props) {
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <Subheader component="div">EVENEMENTS PREVUS</Subheader>
         </GridListTile>
-        {realData.map(tile => (
+        {tileData.map(tile => (
           <GridListTile key={tile.img}>
             <img src={tile.img} alt={tile.nom} />
             <GridListTileBar
